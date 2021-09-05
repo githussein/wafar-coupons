@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class Coupon {
+class Coupon with ChangeNotifier {
   final String id;
   final String title;
   final String description;
