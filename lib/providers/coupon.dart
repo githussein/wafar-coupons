@@ -5,13 +5,18 @@ class Coupon with ChangeNotifier {
   final String title;
   final String description;
   final String imageUrl;
-  bool isFinal;
+  bool isFavorite;
 
   Coupon({
     @required this.id,
     @required this.title,
     @required this.description,
     @required this.imageUrl,
-    this.isFinal = false,
+    this.isFavorite = false,
   });
+
+  void toggleFavoriteStatus() {
+    isFavorite = !isFavorite;
+    notifyListeners();
+  }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/coupons_list.dart';
+import '../widgets/coupons_listview.dart';
 
 class CouponsOverviewScreen extends StatelessWidget {
   @override
@@ -12,7 +12,7 @@ class CouponsOverviewScreen extends StatelessWidget {
         ),
         backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       ),
-      body: CouponsList(),
+      body: CouponsListView(),
     );
   }
 }

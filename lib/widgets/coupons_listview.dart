@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import './coupon_item.dart';
 import '../providers/coupons_provider.dart';
 
-class CouponsList extends StatelessWidget {
+class CouponsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //access the coupon data
@@ -16,14 +16,15 @@ class CouponsList extends StatelessWidget {
 
     return ListView.builder(
       itemCount: coupons.length,
-      itemBuilder: (context, index) {
-        return CouponItem(
-          coupons[index].id,
-          coupons[index].title,
-          coupons[index].description,
-          coupons[index].imageUrl,
-        );
-      },
+      itemBuilder: (context, index) => ChangeNotifierProvider(
+        create: (ctx) => coupons[index],
+        child: CouponItem(
+            // coupons[index].id,
+            // coupons[index].title,
+            // coupons[index].description,
+            // coupons[index].imageUrl,
+            ),
+      ),
     );
   }
 }

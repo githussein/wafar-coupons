@@ -12,6 +12,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Provider of all the coupons
     return ChangeNotifierProvider(
       create: (context) => CouponsProvider(),
       child: MaterialApp(
