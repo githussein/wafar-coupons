@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/coupon_detail_screen.dart';
 
 class CouponItem extends StatelessWidget {
   final String id;
@@ -11,6 +12,12 @@ class CouponItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        Navigator.of(context).pushNamed(
+          CouponDetailScreen.routeName,
+          arguments: id,
+        );
+      },
       contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       leading: Container(
         padding: EdgeInsets.only(right: 10.0),
