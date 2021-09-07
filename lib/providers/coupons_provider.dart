@@ -40,8 +40,14 @@ class CouponsProvider with ChangeNotifier {
     ),
   ]; //private
 
+  var _showFavoritesOnly = false;
+
   List<Coupon> get items {
     return [..._items]; //return a copy
+  }
+
+  List<Coupon> get favItems {
+    return _items.where((couponItem) => couponItem.isFavorite).toList();
   }
 
   //

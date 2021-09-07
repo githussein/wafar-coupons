@@ -5,25 +5,25 @@ import './coupon_item.dart';
 import '../providers/coupons_provider.dart';
 
 class CouponsListView extends StatelessWidget {
+  final bool showFavorites;
+
+  CouponsListView(this.showFavorites);
+
   @override
   Widget build(BuildContext context) {
     //access the coupon data
-    final couponsData = Provider.of<CouponsProvider>(
-        context); //instance of the coupons provider
+    //instance of the coupons provider
+    final couponsData = Provider.of<CouponsProvider>(context);
 
     //store the list of coupons
-    final coupons = couponsData.items;
+    final coupons = showFavorites ? couponsData.favItems : couponsData.items;
 
     return ListView.builder(
       itemCount: coupons.length,
-      itemBuilder: (context, index) => ChangeNotifierProvider(
-        create: (ctx) => coupons[index],
-        child: CouponItem(
-            // coupons[index].id,
-            // coupons[index].title,
-            // coupons[index].description,
-            // coupons[index].imageUrl,
-            ),
+      itemBuilder: (context, index) => ChangeNotifierProvider.value(
+        // create: (ctx) => coupons[index],
+        value: coupons[index],
+        child: CouponItem(),
       ),
     );
   }

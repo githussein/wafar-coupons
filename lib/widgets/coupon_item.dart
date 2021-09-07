@@ -7,8 +7,8 @@ import '../providers/coupon.dart';
 class CouponItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //listen to the provider
-    final coupon = Provider.of<Coupon>(context);
+    //listen once to the provider to get coupon object
+    final coupon = Provider.of<Coupon>(context, listen: false);
     return ListTile(
       onTap: () {
         Navigator.of(context).pushNamed(
@@ -36,13 +36,17 @@ class CouponItem extends StatelessWidget {
       ),
       // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
       subtitle: Text(coupon.description, style: TextStyle(color: Colors.white)),
-      trailing: IconButton(
-        onPressed: () {
-          coupon.toggleFavoriteStatus();
-        },
-        icon: Icon(coupon.isFavorite ? Icons.favorite : Icons.favorite_border),
-        color: Colors.deepOrange,
-        iconSize: 30,
+      //a listener for this part only
+      trailing: Consumer<Coupon>(
+        builder: (context, coupon, _) => IconButton(
+          onPressed: () {
+            coupon.toggleFavoriteStatus();
+          },
+          icon:
+              Icon(coupon.isFavorite ? Icons.favorite : Icons.favorite_border),
+          color: Colors.deepOrange,
+          iconSize: 30,
+        ),
       ),
     );
   }
