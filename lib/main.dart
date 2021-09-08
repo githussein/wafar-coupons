@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Wafar Cash',
         theme: ThemeData(
-          primarySwatch: Colors.indigo,
+          primarySwatch: Colors.blueGrey,
           accentColor: Colors.deepOrangeAccent,
           fontFamily: 'Lato',
         ),

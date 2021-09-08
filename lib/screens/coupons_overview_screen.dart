@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/app_drawer.dart';
 import '../widgets/coupons_listview.dart';
 import '../widgets/banner_slider.widget.dart';
 
@@ -11,6 +12,7 @@ class CouponsOverviewScreen extends StatefulWidget {
 }
 
 class _CouponsOverviewScreenState extends State<CouponsOverviewScreen> {
+  static const routName = '/home';
   //manage filters
   var _showOnlyFavorites = false;
 
@@ -44,6 +46,7 @@ class _CouponsOverviewScreenState extends State<CouponsOverviewScreen> {
         ],
         backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       ),
+      drawer: AppDrawer(),
       body: ListView(
         children: [
           Container(
