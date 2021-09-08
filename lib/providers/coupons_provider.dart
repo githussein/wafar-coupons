@@ -3,7 +3,7 @@ import 'coupon.dart';
 
 class CouponsProvider with ChangeNotifier {
   //A list of pre-loaded coupons
-  List<Coupon> _items = [
+  List<Coupon> _couponsItems = [
     Coupon(
       id: "c1",
       title: "Namshi",
@@ -43,11 +43,11 @@ class CouponsProvider with ChangeNotifier {
   var _showFavoritesOnly = false;
 
   List<Coupon> get items {
-    return [..._items]; //return a copy
+    return [..._couponsItems]; //return a copy
   }
 
   List<Coupon> get favItems {
-    return _items.where((couponItem) => couponItem.isFavorite).toList();
+    return _couponsItems.where((couponItem) => couponItem.isFavorite).toList();
   }
 
   //

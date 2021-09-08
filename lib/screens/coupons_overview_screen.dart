@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/coupons_listview.dart';
+import '../widgets/banner_slider.widget.dart';
 
 enum FilterCoupons { Favourites, All }
 
@@ -16,7 +17,7 @@ class _CouponsOverviewScreenState extends State<CouponsOverviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+      // backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       appBar: AppBar(
         title: Text(
           'Coupons',
@@ -43,7 +44,26 @@ class _CouponsOverviewScreenState extends State<CouponsOverviewScreen> {
         ],
         backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       ),
-      body: CouponsListView(_showOnlyFavorites),
+      body: ListView(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: Text(
+              'Top offers',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+          BannerSlider(),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Text(
+              'New Coupons',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+          CouponsListView(_showOnlyFavorites),
+        ],
+      ),
     );
   }
 }

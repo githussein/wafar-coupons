@@ -31,11 +31,10 @@ class CouponItem extends StatelessWidget {
       ),
       title: Text(
         coupon.title,
-        style: TextStyle(
-            color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
       // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
-      subtitle: Text(coupon.description, style: TextStyle(color: Colors.white)),
+      subtitle: Text(coupon.description),
       //a listener for this part only
       trailing: Consumer<Coupon>(
         builder: (context, coupon, _) => IconButton(

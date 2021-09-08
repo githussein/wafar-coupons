@@ -18,12 +18,16 @@ class CouponsListView extends StatelessWidget {
     //store the list of coupons
     final coupons = showFavorites ? couponsData.favItems : couponsData.items;
 
-    return ListView.builder(
-      itemCount: coupons.length,
-      itemBuilder: (context, index) => ChangeNotifierProvider.value(
-        // create: (ctx) => coupons[index],
-        value: coupons[index],
-        child: CouponItem(),
+    return Expanded(
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: ClampingScrollPhysics(),
+        itemCount: coupons.length,
+        itemBuilder: (context, index) => ChangeNotifierProvider.value(
+          // create: (ctx) => coupons[index],
+          value: coupons[index],
+          child: CouponItem(),
+        ),
       ),
     );
   }
