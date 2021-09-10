@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/coupons_provider.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/coupons_listview.dart';
 import '../widgets/banner_slider.widget.dart';
@@ -15,6 +17,32 @@ class _CouponsOverviewScreenState extends State<CouponsOverviewScreen> {
   static const routName = '/home';
   //manage filters
   var _showOnlyFavorites = false;
+  var _isInit = true;
+  var _isLoading = false;
+
+  @override
+  void initState() {
+    // Provider.of<CouponsProvider>(context).fetchCoupons();
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // if (_isInit) {
+    //   setState(() {
+    //     _isLoading = true;
+    //   });
+    //   Provider.of<CouponsProvider>(context, listen: false)
+    //       .fetchCoupons()
+    //       .then((_) {
+    //     setState(() {
+    //       _isLoading = false;
+    //     });
+    //   });
+    // }
+    // _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +72,7 @@ class _CouponsOverviewScreenState extends State<CouponsOverviewScreen> {
                         child: Text('Show all'), value: FilterCoupons.All),
                   ])
         ],
-        backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+        // backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       ),
       drawer: AppDrawer(),
       body: ListView(
@@ -64,7 +92,11 @@ class _CouponsOverviewScreenState extends State<CouponsOverviewScreen> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
-          CouponsListView(_showOnlyFavorites),
+          _isLoading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : CouponsListView(_showOnlyFavorites),
         ],
       ),
     );

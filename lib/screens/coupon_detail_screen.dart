@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:wafar_cash/providers/coupons_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CouponDetailScreen extends StatelessWidget {
   static const routeName = '/coupon-details';
@@ -57,47 +58,56 @@ class CouponDetailScreen extends StatelessWidget {
       children: <Widget>[
         Container(
             padding: EdgeInsets.only(left: 10.0),
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.35,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(loadedCoupon.imageUrl),
                 fit: BoxFit.cover,
               ),
             )),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.5,
-          padding: EdgeInsets.all(40.0),
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, .9)),
-          child: Center(
-            child: topContentText,
-          ),
-        ),
-        Positioned(
-          left: 8.0,
-          top: 60.0,
-          child: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(Icons.arrow_back, color: Colors.white),
-          ),
-        )
+        // Container(
+        //   height: MediaQuery.of(context).size.height * 0.5,
+        //   padding: EdgeInsets.all(40.0),
+        //   width: MediaQuery.of(context).size.width,
+        //   // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, .9)),
+        //   child: Center(
+        //     child: topContentText,
+        //   ),
+        // ),
+        // Positioned(
+        //   left: 8.0,
+        //   top: 60.0,
+        //   child: InkWell(
+        //     onTap: () {
+        //       Navigator.pop(context);
+        //     },
+        //     child: Icon(Icons.arrow_back, color: Colors.white),
+        //   ),
+        // )
       ],
     );
 
+    final bottomContentTitle = Text(
+      loadedCoupon.title,
+      style: TextStyle(fontSize: 20.0),
+    );
+    final space = Divider(height: 30);
     final bottomContentText = Text(
-      loadedCoupon.imageUrl,
+      loadedCoupon.description,
       style: TextStyle(fontSize: 18.0),
     );
+
+    void _launchURL() async => await canLaunch(loadedCoupon.link)
+        ? await launch(loadedCoupon.link)
+        : throw 'Could not launch ';
+
     final readButton = Container(
         padding: EdgeInsets.symmetric(vertical: 16.0),
         width: MediaQuery.of(context).size.width,
-        child: RaisedButton(
-          onPressed: () => {},
-          color: Color.fromRGBO(58, 66, 86, 1.0),
-          child:
-              Text("TAKE THIS LESSON", style: TextStyle(color: Colors.white)),
+        child: MaterialButton(
+          onPressed: _launchURL,
+          color: Theme.of(context).primaryColor,
+          child: Text("Start shopping", style: TextStyle(color: Colors.white)),
         ));
     final bottomContent = Container(
       // height: MediaQuery.of(context).size.height,
@@ -106,7 +116,13 @@ class CouponDetailScreen extends StatelessWidget {
       padding: EdgeInsets.all(40.0),
       child: Center(
         child: Column(
-          children: <Widget>[bottomContentText, readButton],
+          children: <Widget>[
+            bottomContentTitle,
+            space,
+            bottomContentText,
+            space,
+            readButton
+          ],
         ),
       ),
     );
@@ -115,8 +131,10 @@ class CouponDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(loadedCoupon.title),
       ),
-      body: Column(
-        children: <Widget>[topContent, bottomContent],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[topContent, bottomContent],
+        ),
       ),
     );
   }

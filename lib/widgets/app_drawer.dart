@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wafar_cash/screens/manage_coupons_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -30,6 +31,14 @@ class AppDrawer extends StatelessWidget {
           title: Text('Contact us'),
           onTap: () {
             Navigator.of(context).pushReplacementNamed('/');
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.edit),
+          title: Text('Manage Products'),
+          onTap: () {
+            Navigator.of(context)
+                .pushReplacementNamed(ManageCouponsScreen.routeName);
           },
         ),
       ],
