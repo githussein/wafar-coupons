@@ -26,6 +26,36 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
     imageUrl: '',
     link: '',
   );
+  var _initValues = {
+    'title': '',
+    'code': '',
+    'description': '',
+    'imageUrl': '',
+    'link': '',
+  };
+  var _isInit = true;
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      final couponId = ModalRoute.of(context).settings.arguments as String;
+      if (couponId != null) {
+        _editedCoupon = Provider.of<CouponsProvider>(context, listen: false)
+            .findById(couponId);
+        _initValues = {
+          'title': _editedCoupon.title,
+          'code': _editedCoupon.code,
+          'description': _editedCoupon.description,
+          // 'imageUrl': '_editedCoupon.imageUrl',
+          'imageUrl': '',
+          'link': _editedCoupon.link,
+        };
+        _imageLinkController.text = _editedCoupon.imageUrl;
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   void initState() {
@@ -54,9 +84,18 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
     if (_formKey.currentState.validate()) {
       //all fields are filled
       _formKey.currentState.save(); //execute every onSaved function
-      //update provider
-      Provider.of<CouponsProvider>(context, listen: false)
-          .addCoupon(_editedCoupon);
+
+      //check weather to edit or add a new coupon
+      if (_editedCoupon.id != null) {
+        //update provider
+        Provider.of<CouponsProvider>(context, listen: false)
+            .updateCoupon(_editedCoupon.id, _editedCoupon);
+      } else {
+        //update provider
+        Provider.of<CouponsProvider>(context, listen: false)
+            .addCoupon(_editedCoupon);
+      }
+
       Navigator.of(context).pop();
     }
   }
@@ -64,7 +103,17 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Edit Coupon')),
+      appBar: AppBar(
+        title: Text('Edit Coupon'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: () {
+              _saveForm();
+            },
+          )
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -73,6 +122,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
             child: Column(
               children: [
                 TextFormField(
+                  initialValue: _initValues['title'],
                   decoration: InputDecoration(labelText: 'Title'),
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (_) {
@@ -92,10 +142,12 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                         code: _editedCoupon.code,
                         description: _editedCoupon.description,
                         imageUrl: _editedCoupon.imageUrl,
-                        link: _editedCoupon.link);
+                        link: _editedCoupon.link,
+                        isFavorite: _editedCoupon.isFavorite);
                   },
                 ),
                 TextFormField(
+                  initialValue: _initValues['code'],
                   decoration: InputDecoration(labelText: 'code'),
                   textInputAction: TextInputAction.next,
                   focusNode: _codeFocusNode,
@@ -116,10 +168,12 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                         code: value,
                         description: _editedCoupon.description,
                         imageUrl: _editedCoupon.imageUrl,
-                        link: _editedCoupon.link);
+                        link: _editedCoupon.link,
+                        isFavorite: _editedCoupon.isFavorite);
                   },
                 ),
                 TextFormField(
+                  initialValue: _initValues['description'],
                   decoration: InputDecoration(labelText: 'Description'),
                   maxLines: 3,
                   keyboardType: TextInputType.multiline,
@@ -138,10 +192,12 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                         code: _editedCoupon.code,
                         description: value,
                         imageUrl: _editedCoupon.imageUrl,
-                        link: _editedCoupon.link);
+                        link: _editedCoupon.link,
+                        isFavorite: _editedCoupon.isFavorite);
                   },
                 ),
                 TextFormField(
+                  initialValue: _initValues['link'],
                   decoration: InputDecoration(labelText: 'Store link'),
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.url,
@@ -163,7 +219,8 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                         code: _editedCoupon.code,
                         description: _editedCoupon.description,
                         imageUrl: _editedCoupon.imageUrl,
-                        link: value);
+                        link: value,
+                        isFavorite: _editedCoupon.isFavorite);
                   },
                 ),
                 Row(
@@ -185,6 +242,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                     ),
                     Expanded(
                       child: TextFormField(
+                        // initialValue: _initValues['imageUrl'],
                         decoration: InputDecoration(labelText: 'Image link'),
                         keyboardType: TextInputType.url,
                         textInputAction: TextInputAction.done,
@@ -207,7 +265,8 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                               code: _editedCoupon.code,
                               description: _editedCoupon.description,
                               imageUrl: value,
-                              link: _editedCoupon.link);
+                              link: _editedCoupon.link,
+                              isFavorite: _editedCoupon.isFavorite);
                         },
                       ),
                     ),
@@ -222,7 +281,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                         _saveForm();
                       },
                       color: Theme.of(context).primaryColor,
-                      child: Text("Add Coupon",
+                      child: Text("Save changes",
                           style: TextStyle(color: Colors.white)),
                     ))
               ],

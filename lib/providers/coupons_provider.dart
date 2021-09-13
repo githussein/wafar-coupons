@@ -80,6 +80,14 @@ class CouponsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateCoupon(String id, Coupon newCoupon) {
+    final coupIndex = _couponsItems.indexWhere((coup) => coup.id == id);
+    if (coupIndex >= 0) {
+      _couponsItems[coupIndex] = newCoupon;
+      notifyListeners();
+    }
+  }
+
   Future<void> fetchCoupons() async {
     final url = Uri.parse('https://flutter=update.firebaseio.com/');
     try {

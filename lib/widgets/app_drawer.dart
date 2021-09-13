@@ -35,7 +35,7 @@ class AppDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.edit),
-          title: Text('Manage Products'),
+          title: Text('Manage Coupons'),
           onTap: () {
             Navigator.of(context)
                 .pushReplacementNamed(ManageCouponsScreen.routeName);

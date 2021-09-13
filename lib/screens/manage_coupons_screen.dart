@@ -34,6 +34,7 @@ class ManageCouponsScreen extends StatelessWidget {
           itemBuilder: (_, i) => Column(
             children: [
               AdminCouponItem(
+                couponsData.items[i].id,
                 couponsData.items[i].title,
                 couponsData.items[i].imageUrl,
               ),
