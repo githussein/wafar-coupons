@@ -10,6 +10,7 @@ class CouponsProvider with ChangeNotifier {
     Coupon(
       id: "c1",
       title: "Namshi",
+      code: "AH5",
       description: "15% discount on all products",
       imageUrl:
           "https://uae.governmentjobs.guru/wp-content/uploads/2020/12/Namashi-Jobs.png",
@@ -18,6 +19,7 @@ class CouponsProvider with ChangeNotifier {
     Coupon(
       id: "c2",
       title: "Noon",
+      code: "AH5",
       description: "10% discount on all products",
       imageUrl:
           "https://mir-s3-cdn-cf.behance.net/projects/404/2c23bd95299963.Y3JvcCw4NDgsNjY0LDE4MCww.jpg",
@@ -26,6 +28,7 @@ class CouponsProvider with ChangeNotifier {
     Coupon(
       id: "c3",
       title: "Bath and Body",
+      code: "AH5",
       description: "10% discount on selected products",
       imageUrl:
           "https://bestgiftcardmarket.com/wp-content/uploads/2020/06/BATHANDBODYWORKS.jpeg",
@@ -34,6 +37,7 @@ class CouponsProvider with ChangeNotifier {
     Coupon(
       id: "c4",
       title: "Max",
+      code: "AH5",
       description: "10% discount on all products",
       imageUrl:
           "https://www.centralparkjakarta.com/wp-content/uploads/2018/08/MAX-Fashions-3.png",
@@ -42,13 +46,14 @@ class CouponsProvider with ChangeNotifier {
     Coupon(
       id: "c5",
       title: "Carrefour",
+      code: "AH5",
       description: "10% discount on all products",
       imageUrl: "https://www.brandslex.de/img/logos/xl/c/logo-carrefour-03.png",
       link: "https://www.carrefourksa.com/",
     ),
   ]; //private
 
-  var _showFavoritesOnly = false;
+  // var _showFavoritesOnly = false;
 
   List<Coupon> get items {
     return [..._couponsItems]; //return a copy
@@ -63,7 +68,15 @@ class CouponsProvider with ChangeNotifier {
     return items.firstWhere((coup) => coup.id == id);
   }
 
-  void addCoupon() {
+  void addCoupon(Coupon coupon) {
+    final newCoupon = Coupon(
+        id: DateTime.now().toString(),
+        title: coupon.title,
+        code: coupon.code,
+        description: coupon.description,
+        imageUrl: coupon.imageUrl,
+        link: coupon.link);
+    _couponsItems.insert(0, newCoupon);
     notifyListeners();
   }
 
@@ -77,6 +90,7 @@ class CouponsProvider with ChangeNotifier {
         loadedCoupons.add(Coupon(
           id: couponId,
           title: couponData['title'],
+          code: couponData['code'],
           description: couponData['description'],
           imageUrl: couponData['imageUrl'],
           link: couponData['link'],

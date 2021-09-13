@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wafar_cash/providers/OffersProvider.dart';
+import 'package:wafar_cash/screens/edit_coupon_screen.dart';
 
 import './screens/coupons_overview_screen.dart';
 import './screens/coupon_detail_screen.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         routes: {
           CouponDetailScreen.routeName: (ctx) => CouponDetailScreen(),
           ManageCouponsScreen.routeName: (ctx) => ManageCouponsScreen(),
+          EditCouponScreen.routeName: (ctx) => EditCouponScreen(),
         },
       ),
     );

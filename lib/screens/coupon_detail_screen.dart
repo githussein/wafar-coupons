@@ -109,6 +109,7 @@ class CouponDetailScreen extends StatelessWidget {
           color: Theme.of(context).primaryColor,
           child: Text("Start shopping", style: TextStyle(color: Colors.white)),
         ));
+
     final bottomContent = Container(
       // height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,

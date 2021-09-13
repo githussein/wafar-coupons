@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wafar_cash/screens/edit_coupon_screen.dart';
 import 'package:wafar_cash/widgets/coupon_item.dart';
 
 import '../providers/coupons_provider.dart';
@@ -19,7 +20,7 @@ class ManageCouponsScreen extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
-                //
+                Navigator.of(context).pushNamed(EditCouponScreen.routeName);
               })
         ],
       ),
