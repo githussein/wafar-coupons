@@ -88,6 +88,11 @@ class CouponsProvider with ChangeNotifier {
     }
   }
 
+  void deleteCoupon(String id) {
+    _couponsItems.removeWhere((coup) => coup.id == id);
+    notifyListeners();
+  }
+
   Future<void> fetchCoupons() async {
     final url = Uri.parse('https://flutter=update.firebaseio.com/');
     try {

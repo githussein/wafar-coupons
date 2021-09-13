@@ -12,6 +12,7 @@ class ManageCouponsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Listen to changes in the coupons list
     final couponsData = Provider.of<CouponsProvider>(context);
     return Scaffold(
       appBar: AppBar(

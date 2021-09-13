@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wafar_cash/screens/edit_coupon_screen.dart';
+import 'package:provider/provider.dart';
+
+import '../screens/edit_coupon_screen.dart';
+import '../providers/coupons_provider.dart';
 
 class AdminCouponItem extends StatelessWidget {
   final String id;
@@ -27,7 +30,34 @@ class AdminCouponItem extends StatelessWidget {
             color: Theme.of(context).errorColor,
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                        title: Text('Remove Coupon'),
+                        content: Text(
+                            'Are you sure you want to delete this coupon?'),
+                        actions: [
+                          MaterialButton(
+                              child: Text(
+                                'No',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                              onPressed: () {
+                                Navigator.of(ctx).pop();
+                              }),
+                          MaterialButton(
+                              child: Text('Yes'),
+                              onPressed: () {
+                                Provider.of<CouponsProvider>(context,
+                                        listen: false)
+                                    .deleteCoupon(id);
+                                Navigator.of(ctx).pop();
+                              }),
+                        ],
+                      ));
+            },
             icon: Icon(Icons.delete),
             color: Theme.of(context).primaryColor,
           ),
