@@ -196,33 +196,6 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                         isFavorite: _editedCoupon.isFavorite);
                   },
                 ),
-                TextFormField(
-                  initialValue: _initValues['link'],
-                  decoration: InputDecoration(labelText: 'Store link'),
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.url,
-                  focusNode: _storeLinkFocusNode,
-                  onFieldSubmitted: (_) {
-                    FocusScope.of(context).requestFocus(_imageLinkFocusNode);
-                  },
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'This field is mandatory';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onSaved: (value) {
-                    _editedCoupon = Coupon(
-                        id: _editedCoupon.id,
-                        title: _editedCoupon.title,
-                        code: _editedCoupon.code,
-                        description: _editedCoupon.description,
-                        imageUrl: _editedCoupon.imageUrl,
-                        link: value,
-                        isFavorite: _editedCoupon.isFavorite);
-                  },
-                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -245,11 +218,12 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                         // initialValue: _initValues['imageUrl'],
                         decoration: InputDecoration(labelText: 'Image link'),
                         keyboardType: TextInputType.url,
-                        textInputAction: TextInputAction.done,
+                        textInputAction: TextInputAction.next,
                         controller: _imageLinkController,
                         focusNode: _imageLinkFocusNode,
                         onFieldSubmitted: (_) {
-                          _saveForm();
+                          FocusScope.of(context)
+                              .requestFocus(_storeLinkFocusNode);
                         },
                         validator: (value) {
                           if (value.isEmpty) {
@@ -271,6 +245,30 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                       ),
                     ),
                   ],
+                ),
+                TextFormField(
+                  initialValue: _initValues['link'],
+                  decoration: InputDecoration(labelText: 'Store link'),
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.url,
+                  focusNode: _storeLinkFocusNode,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'This field is mandatory';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onSaved: (value) {
+                    _editedCoupon = Coupon(
+                        id: _editedCoupon.id,
+                        title: _editedCoupon.title,
+                        code: _editedCoupon.code,
+                        description: _editedCoupon.description,
+                        imageUrl: _editedCoupon.imageUrl,
+                        link: value,
+                        isFavorite: _editedCoupon.isFavorite);
+                  },
                 ),
                 Divider(height: 20),
                 Container(
