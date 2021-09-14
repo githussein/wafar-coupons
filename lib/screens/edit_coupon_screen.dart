@@ -81,7 +81,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
     super.dispose();
   }
 
-  void _saveForm() {
+  Future<void> _saveForm() async {
     if (_formKey.currentState.validate()) {
       //all fields are filled
       _formKey.currentState.save(); //execute every onSaved function
@@ -93,19 +93,12 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
 
       //check weather to edit or add a new coupon
       if (_editedCoupon.id != null) {
-        //update provider
-        Provider.of<CouponsProvider>(context, listen: false)
-            .updateCoupon(_editedCoupon.id, _editedCoupon);
-        setState(() {
-          _isLoading = true;
-        });
-        Navigator.of(context).pop();
-      } else {
-        //update provider
-        Provider.of<CouponsProvider>(context, listen: false)
-            .addCoupon(_editedCoupon)
-            .catchError((error) {
-          return showDialog(
+        try {
+          //update provider
+          await Provider.of<CouponsProvider>(context, listen: false)
+              .updateCoupon(_editedCoupon.id, _editedCoupon);
+        } catch (error) {
+          await showDialog(
               context: context,
               builder: (ctx) => AlertDialog(
                     title: Text('Error'),
@@ -118,13 +111,33 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                           })
                     ],
                   ));
-        }).then((_) {
-          setState(() {
-            _isLoading = false;
-          });
-          Navigator.of(context).pop();
-        });
+        }
+      } else {
+        try {
+          //update provider
+          await Provider.of<CouponsProvider>(context, listen: false)
+              .addCoupon(_editedCoupon);
+        } catch (error) {
+          await showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: Text('Error'),
+                    content: Text('Please check your internet connection.'),
+                    actions: [
+                      MaterialButton(
+                          child: Text('Okay'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          })
+                    ],
+                  ));
+        }
       }
+
+      setState(() {
+        _isLoading = true;
+      });
+      Navigator.of(context).pop();
     }
   }
 

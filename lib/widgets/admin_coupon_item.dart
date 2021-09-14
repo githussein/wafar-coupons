@@ -27,7 +27,6 @@ class AdminCouponItem extends StatelessWidget {
                   .pushNamed(EditCouponScreen.routeName, arguments: id);
             },
             icon: Icon(Icons.edit),
-            color: Theme.of(context).errorColor,
           ),
           IconButton(
             onPressed: () {
