@@ -128,8 +128,24 @@ class CouponsProvider with ChangeNotifier {
   }
 
   void deleteCoupon(String id) {
-    _couponsItems.removeWhere((coup) => coup.id == id);
+    final url = Uri.parse(
+        'https://wafar-cash-demo-default-rtdb.europe-west1.firebasedatabase.app/coupons/$id.json');
+
+    //perform Optimistic Updating
+    final existingCouponIndex =
+        _couponsItems.indexWhere((coup) => coup.id == id);
+    var existingCoupon = _couponsItems[existingCouponIndex]; //store a copy
+    _couponsItems.removeAt(existingCouponIndex);
     notifyListeners();
+
+    //Delete on the server and check errors
+    http.delete(url).then((response) {
+      if (response.statusCode >= 400) {}
+      existingCoupon = null; //remove it from memory
+    }).catchError((_) {
+      _couponsItems.insert(existingCouponIndex, existingCoupon);
+      notifyListeners();
+    });
   }
 
   Future<void> fetchCoupons() async {
