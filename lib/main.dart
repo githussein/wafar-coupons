@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         title: 'Wafar Cash',
         theme: ThemeData(
           primarySwatch: Colors.red,
-          accentColor: Colors.blueGrey,
+          accentColor: Colors.lightBlue,
           fontFamily: 'Lato',
         ),
         home: CouponsOverviewScreen(),

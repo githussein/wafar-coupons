@@ -34,6 +34,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
     'link': '',
   };
   var _isInit = true;
+  var _isLoading = false;
 
   @override
   void didChangeDependencies() {
@@ -85,18 +86,31 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
       //all fields are filled
       _formKey.currentState.save(); //execute every onSaved function
 
+      //to show loading indicator
+      setState(() {
+        _isLoading = true;
+      });
+
       //check weather to edit or add a new coupon
       if (_editedCoupon.id != null) {
         //update provider
         Provider.of<CouponsProvider>(context, listen: false)
             .updateCoupon(_editedCoupon.id, _editedCoupon);
+        setState(() {
+          _isLoading = true;
+        });
+        Navigator.of(context).pop();
       } else {
         //update provider
         Provider.of<CouponsProvider>(context, listen: false)
-            .addCoupon(_editedCoupon);
+            .addCoupon(_editedCoupon)
+            .then((_) {
+          setState(() {
+            _isLoading = false;
+          });
+          Navigator.of(context).pop();
+        });
       }
-
-      Navigator.of(context).pop();
     }
   }
 
@@ -114,117 +128,149 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                TextFormField(
-                  initialValue: _initValues['title'],
-                  decoration: InputDecoration(labelText: 'Title'),
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (_) {
-                    FocusScope.of(context).requestFocus(_codeFocusNode);
-                  },
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'This field is mandatory';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onSaved: (value) {
-                    _editedCoupon = Coupon(
-                        id: _editedCoupon.id,
-                        title: value,
-                        code: _editedCoupon.code,
-                        description: _editedCoupon.description,
-                        imageUrl: _editedCoupon.imageUrl,
-                        link: _editedCoupon.link,
-                        isFavorite: _editedCoupon.isFavorite);
-                  },
-                ),
-                TextFormField(
-                  initialValue: _initValues['code'],
-                  decoration: InputDecoration(labelText: 'code'),
-                  textInputAction: TextInputAction.next,
-                  focusNode: _codeFocusNode,
-                  onFieldSubmitted: (_) {
-                    FocusScope.of(context).requestFocus(_descriptionFocusNode);
-                  },
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'This field is mandatory';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onSaved: (value) {
-                    _editedCoupon = Coupon(
-                        id: _editedCoupon.id,
-                        title: _editedCoupon.title,
-                        code: value,
-                        description: _editedCoupon.description,
-                        imageUrl: _editedCoupon.imageUrl,
-                        link: _editedCoupon.link,
-                        isFavorite: _editedCoupon.isFavorite);
-                  },
-                ),
-                TextFormField(
-                  initialValue: _initValues['description'],
-                  decoration: InputDecoration(labelText: 'Description'),
-                  maxLines: 3,
-                  keyboardType: TextInputType.multiline,
-                  focusNode: _descriptionFocusNode,
-                  validator: (value) {
-                    if (value.length < 5) {
-                      return 'At least 5 characters long.';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onSaved: (value) {
-                    _editedCoupon = Coupon(
-                        id: _editedCoupon.id,
-                        title: _editedCoupon.title,
-                        code: _editedCoupon.code,
-                        description: value,
-                        imageUrl: _editedCoupon.imageUrl,
-                        link: _editedCoupon.link,
-                        isFavorite: _editedCoupon.isFavorite);
-                  },
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      width: 100,
-                      height: 100,
-                      margin: EdgeInsets.only(top: 8, right: 8),
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Colors.grey),
-                      ),
-                      child: _imageLinkController.text.isEmpty
-                          ? Text('Image preview')
-                          : FittedBox(
-                              child: Image.network(_imageLinkController.text),
-                              fit: BoxFit.cover,
-                            ),
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        // initialValue: _initValues['imageUrl'],
-                        decoration: InputDecoration(labelText: 'Image link'),
-                        keyboardType: TextInputType.url,
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        initialValue: _initValues['title'],
+                        decoration: InputDecoration(labelText: 'Title'),
                         textInputAction: TextInputAction.next,
-                        controller: _imageLinkController,
-                        focusNode: _imageLinkFocusNode,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context).requestFocus(_codeFocusNode);
+                        },
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'This field is mandatory';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          _editedCoupon = Coupon(
+                              id: _editedCoupon.id,
+                              title: value,
+                              code: _editedCoupon.code,
+                              description: _editedCoupon.description,
+                              imageUrl: _editedCoupon.imageUrl,
+                              link: _editedCoupon.link,
+                              isFavorite: _editedCoupon.isFavorite);
+                        },
+                      ),
+                      TextFormField(
+                        initialValue: _initValues['code'],
+                        decoration: InputDecoration(labelText: 'code'),
+                        textInputAction: TextInputAction.next,
+                        focusNode: _codeFocusNode,
                         onFieldSubmitted: (_) {
                           FocusScope.of(context)
-                              .requestFocus(_storeLinkFocusNode);
+                              .requestFocus(_descriptionFocusNode);
                         },
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'This field is mandatory';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          _editedCoupon = Coupon(
+                              id: _editedCoupon.id,
+                              title: _editedCoupon.title,
+                              code: value,
+                              description: _editedCoupon.description,
+                              imageUrl: _editedCoupon.imageUrl,
+                              link: _editedCoupon.link,
+                              isFavorite: _editedCoupon.isFavorite);
+                        },
+                      ),
+                      TextFormField(
+                        initialValue: _initValues['description'],
+                        decoration: InputDecoration(labelText: 'Description'),
+                        maxLines: 3,
+                        keyboardType: TextInputType.multiline,
+                        focusNode: _descriptionFocusNode,
+                        validator: (value) {
+                          if (value.length < 5) {
+                            return 'At least 5 characters long.';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          _editedCoupon = Coupon(
+                              id: _editedCoupon.id,
+                              title: _editedCoupon.title,
+                              code: _editedCoupon.code,
+                              description: value,
+                              imageUrl: _editedCoupon.imageUrl,
+                              link: _editedCoupon.link,
+                              isFavorite: _editedCoupon.isFavorite);
+                        },
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 100,
+                            margin: EdgeInsets.only(top: 8, right: 8),
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: Colors.grey),
+                            ),
+                            child: _imageLinkController.text.isEmpty
+                                ? Text('Image preview')
+                                : FittedBox(
+                                    child: Image.network(
+                                        _imageLinkController.text),
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              // initialValue: _initValues['imageUrl'],
+                              decoration:
+                                  InputDecoration(labelText: 'Image link'),
+                              keyboardType: TextInputType.url,
+                              textInputAction: TextInputAction.next,
+                              controller: _imageLinkController,
+                              focusNode: _imageLinkFocusNode,
+                              onFieldSubmitted: (_) {
+                                FocusScope.of(context)
+                                    .requestFocus(_storeLinkFocusNode);
+                              },
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'This field is mandatory';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              onSaved: (value) {
+                                _editedCoupon = Coupon(
+                                    id: _editedCoupon.id,
+                                    title: _editedCoupon.title,
+                                    code: _editedCoupon.code,
+                                    description: _editedCoupon.description,
+                                    imageUrl: value,
+                                    link: _editedCoupon.link,
+                                    isFavorite: _editedCoupon.isFavorite);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      TextFormField(
+                        initialValue: _initValues['link'],
+                        decoration: InputDecoration(labelText: 'Store link'),
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.url,
+                        focusNode: _storeLinkFocusNode,
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'This field is mandatory';
@@ -238,55 +284,28 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                               title: _editedCoupon.title,
                               code: _editedCoupon.code,
                               description: _editedCoupon.description,
-                              imageUrl: value,
-                              link: _editedCoupon.link,
+                              imageUrl: _editedCoupon.imageUrl,
+                              link: value,
                               isFavorite: _editedCoupon.isFavorite);
                         },
                       ),
-                    ),
-                  ],
+                      Divider(height: 20),
+                      Container(
+                          padding: EdgeInsets.symmetric(vertical: 16.0),
+                          width: MediaQuery.of(context).size.width,
+                          child: MaterialButton(
+                            onPressed: () {
+                              _saveForm();
+                            },
+                            color: Theme.of(context).primaryColor,
+                            child: Text("Save changes",
+                                style: TextStyle(color: Colors.white)),
+                          ))
+                    ],
+                  ),
                 ),
-                TextFormField(
-                  initialValue: _initValues['link'],
-                  decoration: InputDecoration(labelText: 'Store link'),
-                  textInputAction: TextInputAction.done,
-                  keyboardType: TextInputType.url,
-                  focusNode: _storeLinkFocusNode,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'This field is mandatory';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onSaved: (value) {
-                    _editedCoupon = Coupon(
-                        id: _editedCoupon.id,
-                        title: _editedCoupon.title,
-                        code: _editedCoupon.code,
-                        description: _editedCoupon.description,
-                        imageUrl: _editedCoupon.imageUrl,
-                        link: value,
-                        isFavorite: _editedCoupon.isFavorite);
-                  },
-                ),
-                Divider(height: 20),
-                Container(
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    width: MediaQuery.of(context).size.width,
-                    child: MaterialButton(
-                      onPressed: () {
-                        _saveForm();
-                      },
-                      color: Theme.of(context).primaryColor,
-                      child: Text("Save changes",
-                          style: TextStyle(color: Colors.white)),
-                    ))
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }

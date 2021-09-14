@@ -68,11 +68,11 @@ class CouponsProvider with ChangeNotifier {
     return items.firstWhere((coup) => coup.id == id);
   }
 
-  void addCoupon(Coupon coupon) {
+  Future<void> addCoupon(Coupon coupon) {
     //Send data to the server
     final url = Uri.parse(
         'https://wafar-cash-demo-default-rtdb.europe-west1.firebasedatabase.app/coupons.json');
-    http
+    return http
         .post(url,
             body: json.encode({
               'title': coupon.title,
