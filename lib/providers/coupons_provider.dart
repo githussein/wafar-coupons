@@ -94,6 +94,8 @@ class CouponsProvider with ChangeNotifier {
       //add the coupon to the local list on top
       _couponsItems.insert(0, newCoupon);
       notifyListeners();
+    }).catchError((error) {
+      throw error;
     });
   }
 

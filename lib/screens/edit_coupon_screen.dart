@@ -104,7 +104,21 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
         //update provider
         Provider.of<CouponsProvider>(context, listen: false)
             .addCoupon(_editedCoupon)
-            .then((_) {
+            .catchError((error) {
+          return showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: Text('Error'),
+                    content: Text('Please check your internet connection.'),
+                    actions: [
+                      MaterialButton(
+                          child: Text('Okay'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          })
+                    ],
+                  ));
+        }).then((_) {
           setState(() {
             _isLoading = false;
           });
