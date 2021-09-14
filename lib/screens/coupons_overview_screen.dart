@@ -14,33 +14,27 @@ class CouponsOverviewScreen extends StatefulWidget {
 }
 
 class _CouponsOverviewScreenState extends State<CouponsOverviewScreen> {
-  static const routName = '/home';
+  // static const routName = '/home';
   //manage filters
   var _showOnlyFavorites = false;
   var _isInit = true;
   var _isLoading = false;
 
   @override
-  void initState() {
-    // Provider.of<CouponsProvider>(context).fetchCoupons();
-    super.initState();
-  }
-
-  @override
   void didChangeDependencies() {
-    // if (_isInit) {
-    //   setState(() {
-    //     _isLoading = true;
-    //   });
-    //   Provider.of<CouponsProvider>(context, listen: false)
-    //       .fetchCoupons()
-    //       .then((_) {
-    //     setState(() {
-    //       _isLoading = false;
-    //     });
-    //   });
-    // }
-    // _isInit = false;
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<CouponsProvider>(context, listen: false)
+          .fetchCoupons()
+          .then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
     super.didChangeDependencies();
   }
 
@@ -93,9 +87,7 @@ class _CouponsOverviewScreenState extends State<CouponsOverviewScreen> {
             ),
           ),
           _isLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
+              ? Center(child: CircularProgressIndicator())
               : CouponsListView(_showOnlyFavorites),
         ],
       ),
