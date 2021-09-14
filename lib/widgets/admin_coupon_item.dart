@@ -13,6 +13,7 @@ class AdminCouponItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
     return ListTile(
       title: Text(title),
       leading: CircleAvatar(
@@ -48,10 +49,18 @@ class AdminCouponItem extends StatelessWidget {
                               }),
                           MaterialButton(
                               child: Text('Yes'),
-                              onPressed: () {
-                                Provider.of<CouponsProvider>(context,
-                                        listen: false)
-                                    .deleteCoupon(id);
+                              onPressed: () async {
+                                try {
+                                  await Provider.of<CouponsProvider>(context,
+                                          listen: false)
+                                      .deleteCoupon(id);
+                                } catch (error) {
+                                  scaffoldMessenger.showSnackBar(SnackBar(
+                                      content: Text(
+                                    'Failed to delete coupon!',
+                                    textAlign: TextAlign.center,
+                                  )));
+                                }
                                 Navigator.of(ctx).pop();
                               }),
                         ],

@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 
 import 'coupon.dart';
-import 'package:http/http.dart' as http;
+import '../models/http_exception.dart';
 
 class CouponsProvider with ChangeNotifier {
   //A list of pre-loaded coupons
@@ -127,7 +128,7 @@ class CouponsProvider with ChangeNotifier {
     }
   }
 
-  void deleteCoupon(String id) {
+  Future<void> deleteCoupon(String id) async {
     final url = Uri.parse(
         'https://wafar-cash-demo-default-rtdb.europe-west1.firebasedatabase.app/coupons/$id.json');
 
@@ -135,17 +136,20 @@ class CouponsProvider with ChangeNotifier {
     final existingCouponIndex =
         _couponsItems.indexWhere((coup) => coup.id == id);
     var existingCoupon = _couponsItems[existingCouponIndex]; //store a copy
-    _couponsItems.removeAt(existingCouponIndex);
+    _couponsItems.removeAt(existingCouponIndex); //immediately delete
     notifyListeners();
 
     //Delete on the server and check errors
-    http.delete(url).then((response) {
-      if (response.statusCode >= 400) {}
-      existingCoupon = null; //remove it from memory
-    }).catchError((_) {
+    final response = await http.delete(url);
+
+    if (response.statusCode >= 400) {
       _couponsItems.insert(existingCouponIndex, existingCoupon);
       notifyListeners();
-    });
+      throw HttpException('Could not delete coupon'); //return
+    }
+
+    //if no problems occurred
+    existingCoupon = null; //remove it from memory
   }
 
   Future<void> fetchCoupons() async {
