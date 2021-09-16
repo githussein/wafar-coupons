@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:wafar_cash/providers/coupons_provider.dart';
+import '../providers/coupons_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CouponDetailScreen extends StatelessWidget {
@@ -17,42 +17,42 @@ class CouponDetailScreen extends StatelessWidget {
     final loadedCoupon =
         Provider.of<CouponsProvider>(context, listen: true).findById(couponId);
 
-    final coursePrice = Container(
-      padding: const EdgeInsets.all(7.0),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
-          borderRadius: BorderRadius.circular(5.0)),
-      child: Text(
-        loadedCoupon.id,
-        style: TextStyle(color: Colors.white),
-      ),
-    );
+    // final coursePrice = Container(
+    //   padding: const EdgeInsets.all(7.0),
+    //   decoration: BoxDecoration(
+    //       border: Border.all(color: Colors.white),
+    //       borderRadius: BorderRadius.circular(5.0)),
+    //   child: Text(
+    //     loadedCoupon.id,
+    //     style: TextStyle(color: Colors.white),
+    //   ),
+    // );
 
-    final topContentText = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 120.0),
-        Text(
-          loadedCoupon.title,
-          style: TextStyle(color: Colors.white, fontSize: 45.0),
-        ),
-        SizedBox(height: 30.0),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-                flex: 6,
-                child: Padding(
-                    padding: EdgeInsets.only(left: 10.0),
-                    child: Text(
-                      loadedCoupon.id,
-                      style: TextStyle(color: Colors.white),
-                    ))),
-            Expanded(flex: 1, child: coursePrice)
-          ],
-        ),
-      ],
-    );
+    // final topContentText = Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: <Widget>[
+    //     SizedBox(height: 120.0),
+    //     Text(
+    //       loadedCoupon.title,
+    //       style: TextStyle(color: Colors.white, fontSize: 45.0),
+    //     ),
+    //     SizedBox(height: 30.0),
+    //     Row(
+    //       mainAxisAlignment: MainAxisAlignment.start,
+    //       children: <Widget>[
+    //         Expanded(
+    //             flex: 6,
+    //             child: Padding(
+    //                 padding: EdgeInsets.only(left: 10.0),
+    //                 child: Text(
+    //                   loadedCoupon.id,
+    //                   style: TextStyle(color: Colors.white),
+    //                 ))),
+    //         Expanded(flex: 1, child: coursePrice)
+    //       ],
+    //     ),
+    //   ],
+    // );
 
     final topContent = Stack(
       children: <Widget>[

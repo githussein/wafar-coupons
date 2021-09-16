@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../providers/OffersProvider.dart';
 
@@ -229,14 +230,21 @@ class BannerSlider extends StatelessWidget {
       items: offers.map((offerInstance) {
         return Builder(
           builder: (BuildContext context) {
-            return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(horizontal: 10.0),
-                // decoration: BoxDecoration(color: Colors.amber),
-                child: Image.network(
-                  offerInstance.imageUrl,
-                  fit: BoxFit.cover,
-                ));
+            return InkWell(
+              onTap: () async {
+                await canLaunch(offerInstance.link)
+                    ? await launch(offerInstance.link)
+                    : throw 'Could not launch ';
+              },
+              child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.symmetric(horizontal: 10.0),
+                  // decoration: BoxDecoration(color: Colors.amber),
+                  child: Image.network(
+                    offerInstance.imageUrl,
+                    fit: BoxFit.cover,
+                  )),
+            );
           },
         );
       }).toList(),
