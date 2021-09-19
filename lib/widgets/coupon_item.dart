@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
 import '../screens/coupon_detail_screen.dart';
 import '../providers/coupon.dart';
@@ -41,8 +42,14 @@ class CouponItem extends StatelessWidget {
         //a listener for this part only
         trailing: Consumer<Coupon>(
           builder: (context, coupon, _) => IconButton(
-            onPressed: () {
+            onPressed: () async {
               // coupon.toggleFavoriteStatus();
+              await Share.share('كوبون خصم ' +
+                  coupon.title +
+                  '\n' +
+                  'استخدم الكود التالي من وفر كاش ' +
+                  '\n' +
+                  coupon.code);
             },
             icon: Icon(Icons.share_outlined
                 // coupon.isFavorite ? Icons.favorite : Icons.favorite_border),
