@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './coupon_item.dart';
+import 'store_item.dart';
 import '../providers/coupons_provider.dart';
 
-class CouponsListView extends StatelessWidget {
+class StoresListView extends StatelessWidget {
   final bool showFavorites;
 
-  CouponsListView(this.showFavorites);
+  StoresListView(this.showFavorites);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class CouponsListView extends StatelessWidget {
       itemBuilder: (context, index) => ChangeNotifierProvider.value(
         // create: (ctx) => coupons[index],
         value: coupons[index],
-        child: CouponItem(),
+        child: StoreItem(),
       ),
     );
   }

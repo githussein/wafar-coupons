@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/stores_listview.dart';
 import '../providers/coupons_provider.dart';
 import '../widgets/app_drawer.dart';
-import '../widgets/coupons_listview.dart';
-import '../widgets/banner_slider.widget.dart';
 
 enum FilterCoupons { Favourites, All }
 
-class HomeScreen extends StatefulWidget {
-  // static const routeName = '/home';
+class StoresScreen extends StatefulWidget {
+  static const routeName = '/stores';
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _StoresScreenState createState() => _StoresScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _StoresScreenState extends State<StoresScreen> {
   //manage filters
   var _showOnlyFavorites = false;
   var _isInit = true;
@@ -44,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       appBar: AppBar(
         title: Text(
-          'Coupons',
+          'Stores',
         ),
         actions: <Widget>[
           PopupMenuButton(
@@ -69,28 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
         // backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       ),
       drawer: AppDrawer(),
-      body: ListView(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: Text(
-              'Top offers',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ),
-          BannerSlider(),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Text(
-              'New Coupons',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ),
-          _isLoading
-              ? Center(child: CircularProgressIndicator())
-              : CouponsListView(_showOnlyFavorites),
-        ],
-      ),
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : StoresListView(_showOnlyFavorites),
     );
   }
 }

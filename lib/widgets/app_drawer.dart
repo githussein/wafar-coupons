@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../screens/manage_coupons_screen.dart';
 import '../screens/manage_offers_screen.dart';
 import '../services/auth.dart';
+import '../screens/stores_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -22,7 +23,7 @@ class AppDrawer extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 leading: Icon(Icons.card_giftcard),
-                title: Text('Coupons & Offers'),
+                title: Text('Home Page'),
                 onTap: () {
                   Navigator.of(context).pushReplacementNamed('/');
                 },
@@ -31,7 +32,8 @@ class AppDrawer extends StatelessWidget {
                 leading: Icon(Icons.storefront_sharp),
                 title: Text('Stores'),
                 onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/');
+                  Navigator.of(context)
+                      .pushReplacementNamed(StoresScreen.routeName);
                 },
               ),
               ListTile(

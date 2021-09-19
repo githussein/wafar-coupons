@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:wafar_cash/services/auth.dart';
 
+import 'services/auth.dart';
 import 'providers/OffersProvider.dart';
 import 'providers/coupons_provider.dart';
 import 'screens/auth_screen.dart';
@@ -13,7 +13,7 @@ import 'screens/manage_offers_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/coupon_detail_screen.dart';
 import 'screens/manage_coupons_screen.dart';
-// import 'providers/auth.dart';
+import 'screens/stores_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
           EditCouponScreen.routeName: (ctx) => EditCouponScreen(),
           ManageOffersScreen.routeName: (ctx) => ManageOffersScreen(),
           EditOfferScreen.routeName: (ctx) => EditOfferScreen(),
+          StoresScreen.routeName: (ctx) => StoresScreen(),
         },
       ),
     );
