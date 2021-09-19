@@ -71,7 +71,7 @@ class AuthenticationWrapper extends StatelessWidget {
       var currentUser = FirebaseAuth.instance.currentUser;
 
       if (currentUser != null) {
-        print('IDDDDDDDDDDDDDDDDDDDDDD' + currentUser.uid);
+        print('IDDDDDDDDDDDDDDDDDDDDDD:   ' + currentUser.uid);
       }
 
       return HomeScreen();

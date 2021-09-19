@@ -18,6 +18,7 @@ class ManageOffersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     //Listen to changes in the coupons list
     final offersData = Provider.of<OffersProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Manage Offers'),
@@ -33,9 +34,7 @@ class ManageOffersScreen extends StatelessWidget {
       body: RefreshIndicator(
         onRefresh: () => _refreshProducts(context),
         child: Padding(
-          padding: EdgeInsets.all(
-            (10),
-          ),
+          padding: EdgeInsets.all((10)),
           child: ListView.builder(
             itemCount: offersData.items.length,
             itemBuilder: (_, i) => Column(

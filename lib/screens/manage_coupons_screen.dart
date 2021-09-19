@@ -33,9 +33,7 @@ class ManageCouponsScreen extends StatelessWidget {
       body: RefreshIndicator(
         onRefresh: () => _refreshProducts(context),
         child: Padding(
-          padding: EdgeInsets.all(
-            (10),
-          ),
+          padding: EdgeInsets.all((10)),
           child: ListView.builder(
             itemCount: couponsData.items.length,
             itemBuilder: (_, i) => Column(

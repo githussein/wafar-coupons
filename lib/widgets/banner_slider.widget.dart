@@ -9,7 +9,7 @@ class BannerSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //access the offer data, list of offers
-    final offersData = Provider.of<OffersProvider>(context, listen: false);
+    final offersData = Provider.of<OffersProvider>(context);
 
     //store the list of offers
     final offers = offersData.items;

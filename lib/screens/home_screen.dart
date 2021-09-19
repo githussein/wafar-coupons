@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/coupons_provider.dart';
+import '../providers/OffersProvider.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/coupons_listview.dart';
 import '../widgets/banner_slider.widget.dart';
@@ -26,9 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _isLoading = true;
       });
+      //fetch offers and coupons
       Provider.of<CouponsProvider>(context, listen: false)
           .fetchCoupons()
-          .then((_) {
+          .then((value) {
+        Provider.of<OffersProvider>(context, listen: false).fetchOffers();
+      }).then((_) {
         setState(() {
           _isLoading = false;
         });
