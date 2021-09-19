@@ -5,6 +5,7 @@ import '../screens/manage_coupons_screen.dart';
 import '../screens/manage_offers_screen.dart';
 import '../services/auth.dart';
 import '../screens/stores_screen.dart';
+import '../screens/contact_us.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -40,7 +41,8 @@ class AppDrawer extends StatelessWidget {
                 leading: Icon(Icons.message),
                 title: Text('Contact us'),
                 onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/');
+                  Navigator.of(context)
+                      .pushReplacementNamed(ContactUsScreen.routeName);
                 },
               ),
               ListTile(

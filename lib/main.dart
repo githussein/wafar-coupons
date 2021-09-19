@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wafar_cash/screens/contact_us.dart';
 
 import 'services/auth.dart';
 import 'providers/OffersProvider.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
           ManageOffersScreen.routeName: (ctx) => ManageOffersScreen(),
           EditOfferScreen.routeName: (ctx) => EditOfferScreen(),
           StoresScreen.routeName: (ctx) => StoresScreen(),
+          ContactUsScreen.routeName: (ctx) => ContactUsScreen(),
         },
       ),
     );
