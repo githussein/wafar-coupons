@@ -10,6 +10,7 @@ class CouponItem extends StatelessWidget {
     //listen once to the provider to get coupon object
     final coupon = Provider.of<Coupon>(context, listen: false);
     return Card(
+      margin: EdgeInsets.only(bottom: 8, left: 8, right: 8),
       elevation: 2,
       child: ListTile(
         onTap: () {
@@ -41,11 +42,12 @@ class CouponItem extends StatelessWidget {
         trailing: Consumer<Coupon>(
           builder: (context, coupon, _) => IconButton(
             onPressed: () {
-              coupon.toggleFavoriteStatus();
+              // coupon.toggleFavoriteStatus();
             },
-            icon: Icon(
-                coupon.isFavorite ? Icons.favorite : Icons.favorite_border),
-            color: Theme.of(context).primaryColor,
+            icon: Icon(Icons.share_outlined
+                // coupon.isFavorite ? Icons.favorite : Icons.favorite_border),
+                ),
+            color: Theme.of(context).primaryColor.withOpacity(0.7),
             iconSize: 30,
           ),
         ),

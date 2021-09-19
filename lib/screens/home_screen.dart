@@ -46,26 +46,26 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(
           'Coupons',
         ),
-        actions: <Widget>[
-          PopupMenuButton(
-              onSelected: (FilterCoupons selectedValue) {
-                setState(() {
-                  if (selectedValue == FilterCoupons.Favourites) {
-                    _showOnlyFavorites = true;
-                  } else if (selectedValue == FilterCoupons.All) {
-                    _showOnlyFavorites = false;
-                  }
-                });
-              },
-              icon: Icon(Icons.more_vert),
-              itemBuilder: (_) => [
-                    PopupMenuItem(
-                        child: Text('Favorites only'),
-                        value: FilterCoupons.Favourites),
-                    PopupMenuItem(
-                        child: Text('Show all'), value: FilterCoupons.All),
-                  ])
-        ],
+        // actions: <Widget>[
+        //   PopupMenuButton(
+        //       onSelected: (FilterCoupons selectedValue) {
+        //         setState(() {
+        //           if (selectedValue == FilterCoupons.Favourites) {
+        //             _showOnlyFavorites = true;
+        //           } else if (selectedValue == FilterCoupons.All) {
+        //             _showOnlyFavorites = false;
+        //           }
+        //         });
+        //       },
+        //       icon: Icon(Icons.more_vert),
+        //       itemBuilder: (_) => [
+        //             PopupMenuItem(
+        //                 child: Text('Favorites only'),
+        //                 value: FilterCoupons.Favourites),
+        //             PopupMenuItem(
+        //                 child: Text('Show all'), value: FilterCoupons.All),
+        //           ])
+        // ],
         // backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       ),
       drawer: AppDrawer(),
