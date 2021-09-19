@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "826092767321",
+    "firebase_url": "https://wafar-cash-demo-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "wafar-cash-demo",
+    "storage_bucket": "wafar-cash-demo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826092767321:android:098ad98bce695e36660948",
+        "android_client_info": {
+          "package_name": "com.wafarcash.wafar_cash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "826092767321-b174s6ah457ct29tc0ph6ua9mjfmb68m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlUsk8-M2D8UmSBtXD2KuwpKvkwPwNSI4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "826092767321-b174s6ah457ct29tc0ph6ua9mjfmb68m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

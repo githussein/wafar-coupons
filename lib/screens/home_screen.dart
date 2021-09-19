@@ -8,13 +8,13 @@ import '../widgets/banner_slider.widget.dart';
 
 enum FilterCoupons { Favourites, All }
 
-class CouponsOverviewScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _CouponsOverviewScreenState createState() => _CouponsOverviewScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _CouponsOverviewScreenState extends State<CouponsOverviewScreen> {
-  // static const routName = '/home';
+class _HomeScreenState extends State<HomeScreen> {
+  // static const routeName = '/home';
   //manage filters
   var _showOnlyFavorites = false;
   var _isInit = true;
