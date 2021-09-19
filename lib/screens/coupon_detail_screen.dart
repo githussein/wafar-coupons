@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
 
 import '../providers/coupons_provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CouponDetailScreen extends StatelessWidget {
   static const routeName = '/coupon-details';
@@ -54,43 +55,87 @@ class CouponDetailScreen extends StatelessWidget {
     //   ],
     // );
 
-    final topContent = Stack(
-      children: <Widget>[
-        Container(
-            padding: EdgeInsets.only(left: 10.0),
-            height: MediaQuery.of(context).size.height * 0.35,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(loadedCoupon.imageUrl),
-                fit: BoxFit.cover,
-              ),
-            )),
-        // Container(
-        //   height: MediaQuery.of(context).size.height * 0.5,
-        //   padding: EdgeInsets.all(40.0),
-        //   width: MediaQuery.of(context).size.width,
-        //   // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, .9)),
-        //   child: Center(
-        //     child: topContentText,
-        //   ),
-        // ),
-        // Positioned(
-        //   left: 8.0,
-        //   top: 60.0,
-        //   child: InkWell(
-        //     onTap: () {
-        //       Navigator.pop(context);
-        //     },
-        //     child: Icon(Icons.arrow_back, color: Colors.white),
-        //   ),
-        // )
-      ],
+    final topContent = Container(
+      margin: EdgeInsets.all(10),
+      child: CircleAvatar(
+        backgroundImage: NetworkImage(loadedCoupon.imageUrl),
+        minRadius: 30,
+        maxRadius: 70,
+      ),
     );
+    // Stack(
+    //   children: <Widget>[
+    //     Container(
+    //         margin: EdgeInsets.all(10),
+    //         padding: EdgeInsets.only(left: 10.0),
+    //         height: MediaQuery.of(context).size.height * 0.3,
+    //         decoration: BoxDecoration(
+    //           image: DecorationImage(
+    //             image: NetworkImage(loadedCoupon.imageUrl),
+    //             fit: BoxFit.fitHeight,
+    //           ),
+    //         )),
+    //
+    //
+    //     // Container(
+    //     //   height: MediaQuery.of(context).size.height * 0.5,
+    //     //   padding: EdgeInsets.all(40.0),
+    //     //   width: MediaQuery.of(context).size.width,
+    //     //   // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, .9)),
+    //     //   child: Center(
+    //     //     child: topContentText,
+    //     //   ),
+    //     // ),
+    //     // Positioned(
+    //     //   left: 8.0,
+    //     //   top: 60.0,
+    //     //   child: InkWell(
+    //     //     onTap: () {
+    //     //       Navigator.pop(context);
+    //     //     },
+    //     //     child: Icon(Icons.arrow_back, color: Colors.white),
+    //     //   ),
+    //     // )
+    //   ],
+    // )
 
     final bottomContentTitle = Text(
       loadedCoupon.title,
-      style: TextStyle(fontSize: 20.0),
+      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
     );
+
+    final bottomContentCode = RaisedButton(
+      child: Container(
+        width: 100,
+        child: Row(
+          children: [
+            Text(
+              loadedCoupon.code,
+              style: TextStyle(fontSize: 20.0),
+              textAlign: TextAlign.center,
+            ),
+            Spacer(),
+            Icon(Icons.copy),
+          ],
+        ),
+      ),
+      onPressed: () {
+        Clipboard.setData(ClipboardData(text: loadedCoupon.code)).then((_) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+            "تم نسخ الكود",
+            textAlign: TextAlign.center,
+          )));
+        });
+      },
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+      color: Theme.of(context).primaryColor,
+      textColor: Theme.of(context).primaryTextTheme.button.color,
+    );
+
     final space = Divider(height: 30);
     final bottomContentText = Text(
       loadedCoupon.description,
@@ -119,6 +164,8 @@ class CouponDetailScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             bottomContentTitle,
+            space,
+            bottomContentCode,
             space,
             bottomContentText,
             space,
