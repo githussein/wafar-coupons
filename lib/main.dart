@@ -15,6 +15,7 @@ import 'screens/home_screen.dart';
 import 'screens/coupon_detail_screen.dart';
 import 'screens/manage_coupons_screen.dart';
 import 'screens/stores_screen.dart';
+import 'widgets/categories_slider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Wafar Cash',
         theme: ThemeData(
-          primarySwatch: Colors.red,
+          primarySwatch: Colors.indigo,
           accentColor: Colors.lightBlue,
           fontFamily: 'Lato',
         ),

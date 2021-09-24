@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/categories_slider.dart';
 import '../providers/coupons_provider.dart';
 import '../providers/OffersProvider.dart';
 import '../widgets/app_drawer.dart';
@@ -50,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(
           'Coupons',
         ),
+        //Favorites Filter
         // actions: <Widget>[
         //   PopupMenuButton(
         //       onSelected: (FilterCoupons selectedValue) {
@@ -75,11 +77,12 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: AppDrawer(),
       body: ListView(
         children: [
+          CategorySlider(),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Text(
               'Top offers',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           BannerSlider(),
@@ -87,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Text(
               'New Coupons',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           _isLoading
