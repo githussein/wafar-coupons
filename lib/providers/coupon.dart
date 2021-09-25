@@ -4,6 +4,7 @@ import 'dart:convert';
 
 class Coupon with ChangeNotifier {
   final String id;
+  final String store;
   final String title;
   final String code;
   final String description;
@@ -13,6 +14,7 @@ class Coupon with ChangeNotifier {
 
   Coupon({
     @required this.id,
+    @required this.store,
     @required this.title,
     @required this.code,
     @required this.description,

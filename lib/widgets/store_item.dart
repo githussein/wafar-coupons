@@ -34,12 +34,18 @@ class StoreItem extends StatelessWidget {
               Icons.arrow_back,
               color: Theme.of(context).primaryColor,
             ),
-            Text(
-              coupon.title,
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
+            Container(
+              child: Expanded(
+                child: Text(
+                  coupon.store,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
             CircleAvatar(
               backgroundImage: NetworkImage(coupon.imageUrl),

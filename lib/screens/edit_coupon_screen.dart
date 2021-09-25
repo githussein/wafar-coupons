@@ -20,6 +20,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
   final _formKey = GlobalKey<FormState>();
   var _editedCoupon = Coupon(
     id: null,
+    store: '',
     title: '',
     code: '',
     description: '',
@@ -181,6 +182,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                         onSaved: (value) {
                           _editedCoupon = Coupon(
                               id: _editedCoupon.id,
+                              store: _editedCoupon.store,
                               title: value,
                               code: _editedCoupon.code,
                               description: _editedCoupon.description,
@@ -208,6 +210,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                         onSaved: (value) {
                           _editedCoupon = Coupon(
                               id: _editedCoupon.id,
+                              store: _editedCoupon.store,
                               title: _editedCoupon.title,
                               code: value,
                               description: _editedCoupon.description,
@@ -232,6 +235,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                         onSaved: (value) {
                           _editedCoupon = Coupon(
                               id: _editedCoupon.id,
+                              store: _editedCoupon.store,
                               title: _editedCoupon.title,
                               code: _editedCoupon.code,
                               description: value,
@@ -281,6 +285,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                               onSaved: (value) {
                                 _editedCoupon = Coupon(
                                     id: _editedCoupon.id,
+                                    store: _editedCoupon.store,
                                     title: _editedCoupon.title,
                                     code: _editedCoupon.code,
                                     description: _editedCoupon.description,
@@ -308,6 +313,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                         onSaved: (value) {
                           _editedCoupon = Coupon(
                               id: _editedCoupon.id,
+                              store: _editedCoupon.store,
                               title: _editedCoupon.title,
                               code: _editedCoupon.code,
                               description: _editedCoupon.description,
