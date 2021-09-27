@@ -14,8 +14,7 @@ class StoresScreen extends StatefulWidget {
 }
 
 class _StoresScreenState extends State<StoresScreen> {
-  //manage filters
-  var _showOnlyFavorites = false;
+  //manage state
   var _isInit = true;
   var _isLoading = false;
 
@@ -40,7 +39,6 @@ class _StoresScreenState extends State<StoresScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       appBar: AppBar(
         title: Text(
           'Stores',

@@ -26,13 +26,16 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
     description: '',
     imageUrl: '',
     link: '',
+    category: 'all',
   );
   var _initValues = {
     'title': '',
+    'store': '',
     'code': '',
     'description': '',
     'imageUrl': '',
     'link': '',
+    'category': '',
   };
   var _isInit = true;
   var _isLoading = false;
@@ -46,6 +49,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
             .findById(couponId);
         _initValues = {
           'title': _editedCoupon.title,
+          'store': _editedCoupon.store,
           'code': _editedCoupon.code,
           'description': _editedCoupon.description,
           // 'imageUrl': '_editedCoupon.imageUrl',
@@ -188,6 +192,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                               description: _editedCoupon.description,
                               imageUrl: _editedCoupon.imageUrl,
                               link: _editedCoupon.link,
+                              category: _editedCoupon.category,
                               isFavorite: _editedCoupon.isFavorite);
                         },
                       ),
@@ -216,6 +221,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                               description: _editedCoupon.description,
                               imageUrl: _editedCoupon.imageUrl,
                               link: _editedCoupon.link,
+                              category: _editedCoupon.category,
                               isFavorite: _editedCoupon.isFavorite);
                         },
                       ),
@@ -241,6 +247,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                               description: value,
                               imageUrl: _editedCoupon.imageUrl,
                               link: _editedCoupon.link,
+                              category: _editedCoupon.category,
                               isFavorite: _editedCoupon.isFavorite);
                         },
                       ),
@@ -291,6 +298,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                                     description: _editedCoupon.description,
                                     imageUrl: value,
                                     link: _editedCoupon.link,
+                                    category: _editedCoupon.category,
                                     isFavorite: _editedCoupon.isFavorite);
                               },
                             ),
@@ -319,6 +327,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                               description: _editedCoupon.description,
                               imageUrl: _editedCoupon.imageUrl,
                               link: value,
+                              category: _editedCoupon.category,
                               isFavorite: _editedCoupon.isFavorite);
                         },
                       ),

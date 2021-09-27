@@ -12,7 +12,6 @@ class StoreCouponsScreen extends StatefulWidget {
 }
 
 class _StoreCouponsScreenState extends State<StoreCouponsScreen> {
-  var _showOnlyFavorites = false;
 //manage state
   var _isInit = true;
   var _isLoading = false;

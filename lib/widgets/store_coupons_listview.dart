@@ -9,9 +9,9 @@ import '../screens/coupon_detail_screen.dart';
 class StoreCouponsListview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //extract data of the coupon using th ID
+    //extract data of the coupon using th store name
     final String storeName =
-        ModalRoute.of(context).settings.arguments as String; //the id
+        ModalRoute.of(context).settings.arguments as String; //the store name
 
     //access the coupon data
     //instance of the coupons provider

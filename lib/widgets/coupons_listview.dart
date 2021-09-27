@@ -7,9 +7,10 @@ import '../screens/coupon_detail_screen.dart';
 import '../providers/coupon.dart';
 
 class CouponsListView extends StatelessWidget {
-  final bool showFavorites;
+  // final bool showFavorites;
+  final String categoryFilter;
 
-  CouponsListView(this.showFavorites);
+  CouponsListView(this.categoryFilter);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class CouponsListView extends StatelessWidget {
     final couponsData = Provider.of<CouponsProvider>(context);
 
     //store the list of coupons
-    final coupons = showFavorites ? couponsData.favItems : couponsData.items;
+    final coupons = couponsData.items;
 
     return ListView.builder(
       shrinkWrap: true,
@@ -62,11 +63,15 @@ class CouponItem extends StatelessWidget {
           ),
         ),
         title: Text(
-          coupon.title,
+          coupon.store,
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          maxLines: 1,
         ),
         // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
-        subtitle: Text(coupon.description),
+        subtitle: Text(
+          coupon.description,
+          maxLines: 2,
+        ),
         //a listener for this part only
         trailing: Consumer<Coupon>(
           builder: (context, coupon, _) => IconButton(

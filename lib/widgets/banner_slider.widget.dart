@@ -238,7 +238,8 @@ class BannerSlider extends StatelessWidget {
               },
               child: Container(
                   width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(horizontal: 10.0),
+                  margin: EdgeInsets.symmetric(horizontal: 5.0),
+                  padding: EdgeInsets.only(top: 8),
                   // decoration: BoxDecoration(color: Colors.amber),
                   child: Image.network(
                     offerInstance.imageUrl,

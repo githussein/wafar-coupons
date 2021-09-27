@@ -16,7 +16,7 @@ import 'screens/coupon_detail_screen.dart';
 import 'screens/manage_coupons_screen.dart';
 import 'screens/stores_screen.dart';
 import 'screens/store_coupons_screen.dart';
-import 'widgets/categories_slider.dart';
+import 'screens/categorized_stores_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Wafar Cash',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.indigo,
           accentColor: Colors.lightBlue,
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
           StoresScreen.routeName: (ctx) => StoresScreen(),
           StoreCouponsScreen.routeName: (ctx) => StoreCouponsScreen(),
           ContactUsScreen.routeName: (ctx) => ContactUsScreen(),
+          CategorizedStoresScreen.routeName: (ctx) => CategorizedStoresScreen(),
         },
       ),
     );

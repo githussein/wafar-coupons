@@ -10,6 +10,7 @@ class Coupon with ChangeNotifier {
   final String description;
   final String imageUrl;
   final String link;
+  String category;
   bool isFavorite;
 
   Coupon({
@@ -20,6 +21,7 @@ class Coupon with ChangeNotifier {
     @required this.description,
     @required this.imageUrl,
     @required this.link,
+    @required this.category,
     this.isFavorite = false,
   });
 
