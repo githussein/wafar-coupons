@@ -2,10 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
-import '../screens/coupon_detail_screen.dart';
 import '../providers/coupon.dart';
+import '../providers/coupons_provider.dart';
+import '../screens/coupon_detail_screen.dart';
+
+class StoreCouponsListview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    //extract data of the coupon using th ID
+    final String storeName =
+        ModalRoute.of(context).settings.arguments as String; //the id
+
+    //access the coupon data
+    //instance of the coupons provider
+    final couponsData = Provider.of<CouponsProvider>(context);
+
+    //store the list of coupons
+    final coupons =
+        couponsData.items.where((coup) => coup.store == storeName).toList();
+
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: ClampingScrollPhysics(),
+      itemCount: coupons.length,
+      itemBuilder: (context, index) => ChangeNotifierProvider.value(
+        // create: (ctx) => coupons[index],
+        value: coupons[index],
+        child: CouponItem(coupons[index].store),
+      ),
+    );
+  }
+}
 
 class CouponItem extends StatelessWidget {
+  final storeName;
+  CouponItem(this.storeName);
   @override
   Widget build(BuildContext context) {
     //listen once to the provider to get coupon object

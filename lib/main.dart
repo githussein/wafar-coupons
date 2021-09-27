@@ -15,6 +15,7 @@ import 'screens/home_screen.dart';
 import 'screens/coupon_detail_screen.dart';
 import 'screens/manage_coupons_screen.dart';
 import 'screens/stores_screen.dart';
+import 'screens/store_coupons_screen.dart';
 import 'widgets/categories_slider.dart';
 
 Future<void> main() async {
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
           ManageOffersScreen.routeName: (ctx) => ManageOffersScreen(),
           EditOfferScreen.routeName: (ctx) => EditOfferScreen(),
           StoresScreen.routeName: (ctx) => StoresScreen(),
+          StoreCouponsScreen.routeName: (ctx) => StoreCouponsScreen(),
           ContactUsScreen.routeName: (ctx) => ContactUsScreen(),
         },
       ),

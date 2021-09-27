@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/stores_listview.dart';
 import '../providers/coupons_provider.dart';
 import '../widgets/app_drawer.dart';
+import '../widgets/store_coupons_listview.dart';
 
-enum FilterCoupons { Favourites, All }
-
-class StoresScreen extends StatefulWidget {
-  static const routeName = '/stores';
+class StoreCouponsScreen extends StatefulWidget {
+  static const routeName = '/store_coupons';
   @override
-  _StoresScreenState createState() => _StoresScreenState();
+  _StoreCouponsScreenState createState() => _StoreCouponsScreenState();
 }
 
-class _StoresScreenState extends State<StoresScreen> {
-  //manage filters
+class _StoreCouponsScreenState extends State<StoreCouponsScreen> {
   var _showOnlyFavorites = false;
+//manage state
   var _isInit = true;
   var _isLoading = false;
 
@@ -43,13 +41,13 @@ class _StoresScreenState extends State<StoresScreen> {
       // backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       appBar: AppBar(
         title: Text(
-          'Stores',
+          'Store Coupons',
         ),
       ),
       drawer: AppDrawer(),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
-          : StoresListView(),
+          : StoreCouponsListview(),
     );
   }
 }
