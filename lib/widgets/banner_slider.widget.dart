@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../providers/OffersProvider.dart';
+import '../providers/offers_provider.dart';
 
 class BannerSlider extends StatelessWidget {
   @override

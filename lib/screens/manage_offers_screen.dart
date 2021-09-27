@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../widgets/admin_offer_item.dart';
 import '../screens/edit_offer_screen.dart';
 import '../widgets/app_drawer.dart';
-import '../providers/OffersProvider.dart';
+import '../providers/offers_provider.dart';
 
 class ManageOffersScreen extends StatelessWidget {
   static const routeName = '/manage-offers';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/coupons_provider.dart';
-import '../providers/OffersProvider.dart';
+import '../providers/offers_provider.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/coupons_listview.dart';
 import '../widgets/banner_slider.widget.dart';

@@ -67,6 +67,7 @@ class CouponItem extends StatelessWidget {
         title: Text(
           coupon.title,
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          maxLines: 2,
         ),
         // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
         subtitle: Text(coupon.description),

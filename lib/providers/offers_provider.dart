@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'Offer.dart';
+import 'offer.dart';
 import '../models/http_exception.dart';
 
 class OffersProvider with ChangeNotifier {

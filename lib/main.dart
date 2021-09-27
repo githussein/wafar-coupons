@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wafar_cash/screens/contact_us.dart';
 
 import 'services/auth.dart';
-import 'providers/OffersProvider.dart';
+import 'providers/offers_provider.dart';
 import 'providers/coupons_provider.dart';
 import 'screens/auth_screen.dart';
 import 'screens/edit_coupon_screen.dart';

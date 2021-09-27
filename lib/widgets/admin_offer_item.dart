@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/edit_offer_screen.dart';
-import '../providers/OffersProvider.dart';
+import '../providers/offers_provider.dart';
 
 class AdminOfferItem extends StatelessWidget {
   final String id;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/Offer.dart';
-import '../providers/OffersProvider.dart';
+import '../providers/offer.dart';
+import '../providers/offers_provider.dart';
 
 class EditOfferScreen extends StatefulWidget {
   static const routeName = '/edit-offer';
