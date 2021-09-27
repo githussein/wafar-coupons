@@ -13,10 +13,12 @@ class EditCouponScreen extends StatefulWidget {
 
 class _EditCouponScreenState extends State<EditCouponScreen> {
   final _codeFocusNode = FocusNode();
+  final _titleFocusNode = FocusNode();
   final _storeLinkFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
   final _imageLinkController = TextEditingController();
   final _imageLinkFocusNode = FocusNode();
+  final _categoryFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
   var _editedCoupon = Coupon(
     id: null,
@@ -78,11 +80,13 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
   @override
   void dispose() {
     _imageLinkFocusNode.removeListener(_updateImageLink);
+    _titleFocusNode.dispose();
     _codeFocusNode.dispose();
     _storeLinkFocusNode.dispose();
     _descriptionFocusNode.dispose();
     _imageLinkController.dispose();
     _imageLinkFocusNode.dispose();
+    _categoryFocusNode.dispose();
     super.dispose();
   }
 
@@ -170,9 +174,37 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                   child: Column(
                     children: [
                       TextFormField(
+                        initialValue: _initValues['store'],
+                        decoration: InputDecoration(labelText: 'Store name'),
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context).requestFocus(_titleFocusNode);
+                        },
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'This field is mandatory';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          _editedCoupon = Coupon(
+                              id: _editedCoupon.id,
+                              store: value,
+                              title: _editedCoupon.title,
+                              code: _editedCoupon.code,
+                              description: _editedCoupon.description,
+                              imageUrl: _editedCoupon.imageUrl,
+                              link: _editedCoupon.link,
+                              category: _editedCoupon.category,
+                              isFavorite: _editedCoupon.isFavorite);
+                        },
+                      ),
+                      TextFormField(
                         initialValue: _initValues['title'],
                         decoration: InputDecoration(labelText: 'Title'),
                         textInputAction: TextInputAction.next,
+                        focusNode: _titleFocusNode,
                         onFieldSubmitted: (_) {
                           FocusScope.of(context).requestFocus(_codeFocusNode);
                         },
@@ -198,7 +230,7 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                       ),
                       TextFormField(
                         initialValue: _initValues['code'],
-                        decoration: InputDecoration(labelText: 'code'),
+                        decoration: InputDecoration(labelText: 'Discount code'),
                         textInputAction: TextInputAction.next,
                         focusNode: _codeFocusNode,
                         onFieldSubmitted: (_) {
@@ -308,9 +340,13 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                       TextFormField(
                         initialValue: _initValues['link'],
                         decoration: InputDecoration(labelText: 'Store link'),
-                        textInputAction: TextInputAction.done,
+                        textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.url,
                         focusNode: _storeLinkFocusNode,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context)
+                              .requestFocus(_categoryFocusNode);
+                        },
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'This field is mandatory';
@@ -328,6 +364,31 @@ class _EditCouponScreenState extends State<EditCouponScreen> {
                               imageUrl: _editedCoupon.imageUrl,
                               link: value,
                               category: _editedCoupon.category,
+                              isFavorite: _editedCoupon.isFavorite);
+                        },
+                      ),
+                      TextFormField(
+                        initialValue: _initValues['category'],
+                        decoration: InputDecoration(labelText: 'Category'),
+                        textInputAction: TextInputAction.done,
+                        focusNode: _categoryFocusNode,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'This field is mandatory';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          _editedCoupon = Coupon(
+                              id: _editedCoupon.id,
+                              store: _editedCoupon.store,
+                              title: _editedCoupon.title,
+                              code: _editedCoupon.code,
+                              description: _editedCoupon.description,
+                              imageUrl: _editedCoupon.imageUrl,
+                              link: _editedCoupon.link,
+                              category: value,
                               isFavorite: _editedCoupon.isFavorite);
                         },
                       ),
