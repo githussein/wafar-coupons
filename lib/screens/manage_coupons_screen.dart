@@ -10,7 +10,7 @@ class ManageCouponsScreen extends StatelessWidget {
   static const routeName = '/manage-coupons';
 
   //function to handle Refresh Indicator
-  Future<void> _refreshProducts(BuildContext ctx) async {
+  Future<void> _refreshCoupons(BuildContext ctx) async {
     await Provider.of<CouponsProvider>(ctx, listen: false).fetchCoupons();
   }
 
@@ -31,7 +31,7 @@ class ManageCouponsScreen extends StatelessWidget {
       ),
       drawer: AppDrawer(),
       body: RefreshIndicator(
-        onRefresh: () => _refreshProducts(context),
+        onRefresh: () => _refreshCoupons(context),
         child: Padding(
           padding: EdgeInsets.all((10)),
           child: ListView.builder(

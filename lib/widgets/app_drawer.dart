@@ -7,6 +7,7 @@ import '../services/auth.dart';
 import '../screens/stores_screen.dart';
 import '../screens/contact_us.dart';
 import '../screens/request_coupon_screen.dart';
+import '../screens/manage_requests_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -68,6 +69,14 @@ class AppDrawer extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context)
                       .pushReplacementNamed(ManageOffersScreen.routeName);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.edit),
+                title: Text('Manage Requests'),
+                onTap: () {
+                  Navigator.of(context)
+                      .pushReplacementNamed(ManageRequestsScreen.routeName);
                 },
               ),
             ],

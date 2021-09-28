@@ -73,51 +73,51 @@ class RequestsProvider with ChangeNotifier {
 //   }
 // }
 
-// Future<void> deleteRequest(String id) async {
-//   final url = Uri.parse(
-//       'https://wafar-cash-demo-default-rtdb.europe-west1.firebasedatabase.app/requests/$id.json');
-//
-//   //perform Optimistic Updating
-//   final existingRequestIndex =
-//       _requestsItems.indexWhere((request) => request.id == id);
-//   var existingRequest = _requestsItems[existingRequestIndex]; //store a copy
-//   _requestsItems.removeAt(existingRequestIndex); //immediately delete
-//   notifyListeners();
-//
-//   //Delete on the server and check errors
-//   final response = await http.delete(url);
-//
-//   if (response.statusCode >= 400) {
-//     _requestsItems.insert(existingRequestIndex, existingRequest);
-//     notifyListeners();
-//     throw HttpException('Could not delete request'); //return
-//   }
-//
-//   //if no problems occurred
-//   existingRequest = null; //remove it from memory
-// }
+  Future<void> deleteRequest(String id) async {
+    final url = Uri.parse(
+        'https://wafar-cash-demo-default-rtdb.europe-west1.firebasedatabase.app/requests/$id.json');
 
-// Future<void> fetchRequests() async {
-//   final url = Uri.parse(
-//       'https://wafar-cash-demo-default-rtdb.europe-west1.firebasedatabase.app/requests.json');
-//   try {
-//     final response = await http.get(url);
-//     final extractedData = json.decode(response.body) as Map<String, dynamic>;
-//     final List<Request> loadedRequestsList = [];
-//
-//     extractedData.forEach((requestId, requestData) {
-//       loadedRequestsList.add(Request(
-//         id: requestId,
-//         userName: requestData['userName'],
-//         email: requestData['email'],
-//         store: requestData['store'],
-//         link: requestData['link'],
-//       ));
-//     });
-//     _requestsItems = loadedRequestsList;
-//     notifyListeners();
-//   } catch (error) {
-//     throw (error);
-//   }
-// }
+    //perform Optimistic Updating
+    final existingRequestIndex =
+        _requestsItems.indexWhere((request) => request.id == id);
+    var existingRequest = _requestsItems[existingRequestIndex]; //store a copy
+    _requestsItems.removeAt(existingRequestIndex); //immediately delete
+    notifyListeners();
+
+    //Delete on the server and check errors
+    final response = await http.delete(url);
+
+    if (response.statusCode >= 400) {
+      _requestsItems.insert(existingRequestIndex, existingRequest);
+      notifyListeners();
+      throw HttpException('Could not delete request'); //return
+    }
+
+    //if no problems occurred
+    existingRequest = null; //remove it from memory
+  }
+
+  Future<void> fetchRequests() async {
+    final url = Uri.parse(
+        'https://wafar-cash-demo-default-rtdb.europe-west1.firebasedatabase.app/requests.json');
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Request> loadedRequestsList = [];
+
+      extractedData.forEach((requestId, requestData) {
+        loadedRequestsList.add(Request(
+          id: requestId,
+          userName: requestData['userName'],
+          email: requestData['email'],
+          store: requestData['store'],
+          link: requestData['link'],
+        ));
+      });
+      _requestsItems = loadedRequestsList;
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
+  }
 }

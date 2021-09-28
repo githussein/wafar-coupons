@@ -19,6 +19,7 @@ import 'screens/stores_screen.dart';
 import 'screens/store_coupons_screen.dart';
 import 'screens/categorized_stores_screen.dart';
 import 'screens/request_coupon_screen.dart';
+import 'screens/manage_requests_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,15 +57,16 @@ class MyApp extends StatelessWidget {
         routes: {
           // AuthScreen.routeName: (ctx) => AuthScreen(),
           CouponDetailScreen.routeName: (ctx) => CouponDetailScreen(),
-          ManageCouponsScreen.routeName: (ctx) => ManageCouponsScreen(),
           EditCouponScreen.routeName: (ctx) => EditCouponScreen(),
-          ManageOffersScreen.routeName: (ctx) => ManageOffersScreen(),
           EditOfferScreen.routeName: (ctx) => EditOfferScreen(),
+          RequestCouponScreen.routeName: (ctx) => RequestCouponScreen(),
+          ManageCouponsScreen.routeName: (ctx) => ManageCouponsScreen(),
+          ManageOffersScreen.routeName: (ctx) => ManageOffersScreen(),
+          ManageRequestsScreen.routeName: (ctx) => ManageRequestsScreen(),
           StoresScreen.routeName: (ctx) => StoresScreen(),
           StoreCouponsScreen.routeName: (ctx) => StoreCouponsScreen(),
           ContactUsScreen.routeName: (ctx) => ContactUsScreen(),
           CategorizedStoresScreen.routeName: (ctx) => CategorizedStoresScreen(),
-          RequestCouponScreen.routeName: (ctx) => RequestCouponScreen(),
         },
       ),
     );

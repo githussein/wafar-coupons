@@ -10,7 +10,7 @@ class ManageOffersScreen extends StatelessWidget {
   static const routeName = '/manage-offers';
 
   //function to handle Refresh Indicator
-  Future<void> _refreshProducts(BuildContext ctx) async {
+  Future<void> _refreshOffers(BuildContext ctx) async {
     await Provider.of<OffersProvider>(ctx, listen: false).fetchOffers();
   }
 
@@ -32,7 +32,7 @@ class ManageOffersScreen extends StatelessWidget {
       ),
       drawer: AppDrawer(),
       body: RefreshIndicator(
-        onRefresh: () => _refreshProducts(context),
+        onRefresh: () => _refreshOffers(context),
         child: Padding(
           padding: EdgeInsets.all((10)),
           child: ListView.builder(
