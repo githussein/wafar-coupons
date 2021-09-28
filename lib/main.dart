@@ -7,6 +7,7 @@ import 'package:wafar_cash/screens/contact_us.dart';
 import 'services/auth.dart';
 import 'providers/offers_provider.dart';
 import 'providers/coupons_provider.dart';
+import 'providers/requests_provider.dart';
 import 'screens/auth_screen.dart';
 import 'screens/edit_coupon_screen.dart';
 import 'screens/edit_offer_screen.dart';
@@ -17,6 +18,7 @@ import 'screens/manage_coupons_screen.dart';
 import 'screens/stores_screen.dart';
 import 'screens/store_coupons_screen.dart';
 import 'screens/categorized_stores_screen.dart';
+import 'screens/request_coupon_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
         // ChangeNotifierProvider(create: (context) => Auth()),
         ChangeNotifierProvider(create: (context) => CouponsProvider()),
         ChangeNotifierProvider(create: (context) => OffersProvider()),
+        ChangeNotifierProvider(create: (context) => RequestsProvider()),
       ],
       child: MaterialApp(
         title: 'Wafar Cash',
@@ -61,6 +64,7 @@ class MyApp extends StatelessWidget {
           StoreCouponsScreen.routeName: (ctx) => StoreCouponsScreen(),
           ContactUsScreen.routeName: (ctx) => ContactUsScreen(),
           CategorizedStoresScreen.routeName: (ctx) => CategorizedStoresScreen(),
+          RequestCouponScreen.routeName: (ctx) => RequestCouponScreen(),
         },
       ),
     );

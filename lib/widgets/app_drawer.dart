@@ -6,6 +6,7 @@ import '../screens/manage_offers_screen.dart';
 import '../services/auth.dart';
 import '../screens/stores_screen.dart';
 import '../screens/contact_us.dart';
+import '../screens/request_coupon_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -35,6 +36,14 @@ class AppDrawer extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context)
                       .pushReplacementNamed(StoresScreen.routeName);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.send),
+                title: Text('Request a coupon'),
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(RequestCouponScreen.routeName);
                 },
               ),
               ListTile(
