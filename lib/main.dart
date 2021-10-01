@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wafar_cash/l10n/l10n.dart';
 import 'package:wafar_cash/screens/contact_us.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'services/auth.dart';
 import 'providers/offers_provider.dart';
 import 'providers/coupons_provider.dart';
 import 'providers/requests_provider.dart';
+import 'providers/locale_provider.dart';
 import 'screens/auth_screen.dart';
 import 'screens/edit_coupon_screen.dart';
 import 'screens/edit_offer_screen.dart';
@@ -40,34 +44,45 @@ class MyApp extends StatelessWidget {
           create: (context) => context.read<AuthService>().authStateChanges,
           initialData: null,
         ),
-        // ChangeNotifierProvider(create: (context) => Auth()),
+        ChangeNotifierProvider(create: (context) => LocaleProvider()),
         ChangeNotifierProvider(create: (context) => CouponsProvider()),
         ChangeNotifierProvider(create: (context) => OffersProvider()),
         ChangeNotifierProvider(create: (context) => RequestsProvider()),
       ],
-      child: MaterialApp(
-        title: 'Wafar Cash',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.indigo,
-          accentColor: Colors.lightBlue,
-          fontFamily: 'Lato',
+      child: Consumer<LocaleProvider>(
+        builder: (context, provider, child) => MaterialApp(
+          title: 'Wafar Cash!',
+          debugShowCheckedModeBanner: false,
+          supportedLocales: L10n.all,
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          theme: ThemeData(
+            primarySwatch: Colors.red,
+            accentColor: Colors.lightBlue,
+            fontFamily: 'Lato',
+          ),
+          locale: Provider.of<LocaleProvider>(context).locale,
+          home: AuthenticationWrapper(),
+          routes: {
+            // AuthScreen.routeName: (ctx) => AuthScreen(),
+            CouponDetailScreen.routeName: (ctx) => CouponDetailScreen(),
+            EditCouponScreen.routeName: (ctx) => EditCouponScreen(),
+            EditOfferScreen.routeName: (ctx) => EditOfferScreen(),
+            RequestCouponScreen.routeName: (ctx) => RequestCouponScreen(),
+            ManageCouponsScreen.routeName: (ctx) => ManageCouponsScreen(),
+            ManageOffersScreen.routeName: (ctx) => ManageOffersScreen(),
+            ManageRequestsScreen.routeName: (ctx) => ManageRequestsScreen(),
+            StoresScreen.routeName: (ctx) => StoresScreen(),
+            StoreCouponsScreen.routeName: (ctx) => StoreCouponsScreen(),
+            ContactUsScreen.routeName: (ctx) => ContactUsScreen(),
+            CategorizedStoresScreen.routeName: (ctx) =>
+                CategorizedStoresScreen(),
+          },
         ),
-        home: AuthenticationWrapper(),
-        routes: {
-          // AuthScreen.routeName: (ctx) => AuthScreen(),
-          CouponDetailScreen.routeName: (ctx) => CouponDetailScreen(),
-          EditCouponScreen.routeName: (ctx) => EditCouponScreen(),
-          EditOfferScreen.routeName: (ctx) => EditOfferScreen(),
-          RequestCouponScreen.routeName: (ctx) => RequestCouponScreen(),
-          ManageCouponsScreen.routeName: (ctx) => ManageCouponsScreen(),
-          ManageOffersScreen.routeName: (ctx) => ManageOffersScreen(),
-          ManageRequestsScreen.routeName: (ctx) => ManageRequestsScreen(),
-          StoresScreen.routeName: (ctx) => StoresScreen(),
-          StoreCouponsScreen.routeName: (ctx) => StoreCouponsScreen(),
-          ContactUsScreen.routeName: (ctx) => ContactUsScreen(),
-          CategorizedStoresScreen.routeName: (ctx) => CategorizedStoresScreen(),
-        },
       ),
     );
   }

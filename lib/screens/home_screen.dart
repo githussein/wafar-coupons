@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../providers/locale_provider.dart';
 import '../providers/coupons_provider.dart';
 import '../providers/offers_provider.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/coupons_listview.dart';
 import '../widgets/banner_slider.widget.dart';
 import 'categorized_stores_screen.dart';
+import '../widgets/language_picker_widget.dart';
 
 enum FilterCoupons { Favourites, All }
+enum AppLanguage { ARABIC, ENGLISH }
 String categoryFilter = "all";
 
 class HomeScreen extends StatefulWidget {
@@ -49,9 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       // backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       appBar: AppBar(
-        title: Text(
-          'Wafar Cash!',
-        ),
+        title: Text(AppLocalizations.of(context).app_name),
         //Favorites Filter
         // actions: <Widget>[
         //   PopupMenuButton(
@@ -73,7 +75,34 @@ class _HomeScreenState extends State<HomeScreen> {
         //                 child: Text('Show all'), value: FilterCoupons.All),
         //           ])
         // ],
-        // backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+
+        // actions: <Widget>[
+        //   PopupMenuButton(
+        //     icon: Icon(Icons.language),
+        //     itemBuilder: (_) => [
+        //       PopupMenuItem(child: Text('عربي'), value: AppLanguage.ARABIC),
+        //       PopupMenuItem(child: Text('English'), value: AppLanguage.ENGLISH),
+        //     ],
+        //     onSelected: (AppLanguage selectedValue) {
+        //       setState(() {
+        //         if (selectedValue == AppLanguage.ARABIC) {
+        //           final provider =
+        //               Provider.of<LocaleProvider>(context, listen: false);
+        //           provider.setLocale(provider.locale);
+        //         } else if (selectedValue == AppLanguage.ENGLISH) {
+        //           final provider =
+        //               Provider.of<LocaleProvider>(context, listen: false);
+        //           provider.setLocale(provider.locale);
+        //         }
+        //       });
+        //     },
+        //   )
+        // ],
+
+        actions: [
+          LanguagePickerWidget(),
+          const SizedBox(width: 12),
+        ],
       ),
       drawer: AppDrawer(),
       body: ListView(

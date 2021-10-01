@@ -1,0 +1,23 @@
+{
+    "language": "English",
+    "app_name": "wafar Cash!",
+    "coupon_details": "Coupon Details",
+    "home_page": "Home page",
+    "stores": "Stores",
+    "request_coupon": "Request a coupon",
+    "contact_us": "Contact us",
+    "manage_coupons": "Manage coupons",
+    "manage_offers": "Manage offers",
+    "manage_requests": "Manage requests",
+    "logout": "Log out",
+
+    "@language": {
+      "description": "The current language"
+    },
+    "helloWorld": "Hello World!",
+
+
+    "@helloWorld": {
+      "description": "The conventional newborn programmer greeting"
+    }
+}

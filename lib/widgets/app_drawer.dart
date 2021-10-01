@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../screens/manage_coupons_screen.dart';
 import '../screens/manage_offers_screen.dart';
@@ -26,7 +27,7 @@ class AppDrawer extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 leading: Icon(Icons.card_giftcard),
-                title: Text('Home Page'),
+                title: Text(AppLocalizations.of(context).app_name),
                 onTap: () {
                   Navigator.of(context).pushReplacementNamed('/');
                 },
