@@ -51,9 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).app_name),
+        title: Text(AppLocalizations.of(context).home_page),
         //Favorites Filter
         // actions: <Widget>[
         //   PopupMenuButton(

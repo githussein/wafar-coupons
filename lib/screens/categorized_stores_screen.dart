@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../providers/coupon.dart';
 import '../providers/coupons_provider.dart';
@@ -40,9 +41,7 @@ class _CategorizedStoresScreenState extends State<CategorizedStoresScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Stores',
-        ),
+        title: Text(AppLocalizations.of(context).stores),
       ),
       drawer: AppDrawer(),
       body: _isLoading

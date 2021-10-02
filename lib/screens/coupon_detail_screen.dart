@@ -153,7 +153,7 @@ class CouponDetailScreen extends StatelessWidget {
         child: MaterialButton(
           onPressed: _launchURL,
           color: Theme.of(context).primaryColor,
-          child: Text("Start shopping", style: TextStyle(color: Colors.white)),
+          child: Text('Start shopping', style: TextStyle(color: Colors.white)),
         ));
 
     final bottomContent = Container(
@@ -178,7 +178,7 @@ class CouponDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).app_name),
+        title: Text(AppLocalizations.of(context).coupon_details),
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../services/auth.dart';
 
@@ -126,7 +127,7 @@ class _AuthCardState extends State<AuthCard> {
 
       _showErrorDialog(error.message);
     } catch (error) {
-      var errorMessage = 'Authentication problem. Please try again later.';
+      var errorMessage = AppLocalizations.of(context).msg_auth_problem;
       _showErrorDialog(errorMessage);
     }
 
@@ -168,11 +169,12 @@ class _AuthCardState extends State<AuthCard> {
             child: Column(
               children: <Widget>[
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'E-Mail'),
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context).email),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value.isEmpty || !value.contains('@')) {
-                      return 'Invalid email!';
+                      return AppLocalizations.of(context).msg_invalid_email;
                     }
                     return null;
                   },
@@ -181,12 +183,13 @@ class _AuthCardState extends State<AuthCard> {
                   },
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Password'),
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context).password),
                   obscureText: true,
                   controller: _passwordController,
                   validator: (value) {
                     if (value.isEmpty || value.length < 5) {
-                      return 'Password is too short!';
+                      return AppLocalizations.of(context).msg_short_password;
                     } else {
                       return null;
                     }
@@ -198,12 +201,15 @@ class _AuthCardState extends State<AuthCard> {
                 if (_authMode == AuthMode.SIGNUP)
                   TextFormField(
                     enabled: _authMode == AuthMode.SIGNUP,
-                    decoration: InputDecoration(labelText: 'Confirm Password'),
+                    decoration: InputDecoration(
+                        labelText:
+                            AppLocalizations.of(context).confirm_password),
                     obscureText: true,
                     validator: _authMode == AuthMode.SIGNUP
                         ? (value) {
                             if (value != _passwordController.text) {
-                              return 'Passwords do not match!';
+                              return AppLocalizations.of(context)
+                                  .msg_passwords_match;
                             } else {
                               return null;
                             }
@@ -217,8 +223,9 @@ class _AuthCardState extends State<AuthCard> {
                   CircularProgressIndicator()
                 else
                   RaisedButton(
-                    child:
-                        Text(_authMode == AuthMode.LOGIN ? 'LOGIN' : 'SIGN UP'),
+                    child: Text(_authMode == AuthMode.LOGIN
+                        ? AppLocalizations.of(context).login
+                        : AppLocalizations.of(context).sign_up),
                     onPressed: _submit,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -230,7 +237,8 @@ class _AuthCardState extends State<AuthCard> {
                   ),
                 MaterialButton(
                   child: Text(
-                      '${_authMode == AuthMode.LOGIN ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
+                      '${_authMode == AuthMode.LOGIN ? AppLocalizations.of(context).sign_up : AppLocalizations.of(context).login}' +
+                          AppLocalizations.of(context).instead),
                   onPressed: _switchAuthMode,
                   padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

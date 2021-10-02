@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/stores_listview.dart';
 import '../providers/coupons_provider.dart';
@@ -41,7 +42,7 @@ class _StoresScreenState extends State<StoresScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Stores',
+          AppLocalizations.of(context).stores,
         ),
       ),
       drawer: AppDrawer(),

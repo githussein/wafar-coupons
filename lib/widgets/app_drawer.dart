@@ -18,7 +18,7 @@ class AppDrawer extends StatelessWidget {
       children: [
         AppBar(
             elevation: 0,
-            title: Text('Wafar Cash'),
+            title: Text(AppLocalizations.of(context).app_name),
             automaticallyImplyLeading: false //don't display back button
             ),
         Expanded(
@@ -27,14 +27,14 @@ class AppDrawer extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 leading: Icon(Icons.card_giftcard),
-                title: Text(AppLocalizations.of(context).app_name),
+                title: Text(AppLocalizations.of(context).home_page),
                 onTap: () {
                   Navigator.of(context).pushReplacementNamed('/');
                 },
               ),
               ListTile(
                 leading: Icon(Icons.storefront_sharp),
-                title: Text('Stores'),
+                title: Text(AppLocalizations.of(context).stores),
                 onTap: () {
                   Navigator.of(context)
                       .pushReplacementNamed(StoresScreen.routeName);
@@ -42,7 +42,7 @@ class AppDrawer extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(Icons.send),
-                title: Text('Request a coupon'),
+                title: Text(AppLocalizations.of(context).request_coupon),
                 onTap: () {
                   Navigator.of(context)
                       .pushNamed(RequestCouponScreen.routeName);
@@ -50,34 +50,10 @@ class AppDrawer extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(Icons.message),
-                title: Text('Contact us'),
+                title: Text(AppLocalizations.of(context).contact_us),
                 onTap: () {
                   Navigator.of(context)
                       .pushReplacementNamed(ContactUsScreen.routeName);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.edit),
-                title: Text('Manage Coupons'),
-                onTap: () {
-                  Navigator.of(context)
-                      .pushReplacementNamed(ManageCouponsScreen.routeName);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.edit),
-                title: Text('Manage Offers'),
-                onTap: () {
-                  Navigator.of(context)
-                      .pushReplacementNamed(ManageOffersScreen.routeName);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.edit),
-                title: Text('Manage Requests'),
-                onTap: () {
-                  Navigator.of(context)
-                      .pushReplacementNamed(ManageRequestsScreen.routeName);
                 },
               ),
             ],
@@ -90,20 +66,47 @@ class AppDrawer extends StatelessWidget {
                 // This container holds all the children that will be aligned
                 // on the bottom and should not scroll with the above ListView
                 child: Container(
-                    child: Column(
-                  children: <Widget>[
-                    Divider(),
-                    ListTile(
-                      leading: Icon(Icons.logout),
-                      title: Text('Log out'),
-                      onTap: () async {
-                        //1- close the drawer
-                        Navigator.of(context).pop();
-                        await context.read<AuthService>().signOut();
-                      },
-                    ),
-                  ],
-                )))),
+                  child: Column(
+                    children: <Widget>[
+                      Divider(),
+                      ListTile(
+                        leading: Icon(Icons.edit),
+                        title:
+                            Text(AppLocalizations.of(context).manage_coupons),
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(ManageCouponsScreen.routeName);
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.edit),
+                        title: Text(AppLocalizations.of(context).manage_offers),
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(ManageOffersScreen.routeName);
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.edit),
+                        title:
+                            Text(AppLocalizations.of(context).manage_requests),
+                        onTap: () {
+                          Navigator.of(context)
+                              .popAndPushNamed(ManageRequestsScreen.routeName);
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.logout),
+                        title: Text(AppLocalizations.of(context).logout),
+                        onTap: () async {
+                          //1- close the drawer
+                          Navigator.of(context).pop();
+                          await context.read<AuthService>().signOut();
+                        },
+                      ),
+                    ],
+                  ),
+                ))),
       ],
     ));
   }

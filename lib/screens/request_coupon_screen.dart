@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../providers/request.dart';
 import '../providers/requests_provider.dart';
@@ -77,51 +78,9 @@ class _RequestCouponState extends State<RequestCouponScreen> {
         _isLoading = true;
       });
 
-      //check weather to edit or add a new coupon
-      // if (_editedRequest.id != null) {
-      //   try {
-      //     //update provider
-      //     await Provider.of<RequestsProvider>(context, listen: false)
-      //         .updateRequest(_editedRequest.id, _editedRequest);
-      //   } catch (error) {
-      //     await showDialog(
-      //         context: context,
-      //         builder: (ctx) => AlertDialog(
-      //               title: Text('Error'),
-      //               content: Text('Please check your internet connection.'),
-      //               actions: [
-      //                 MaterialButton(
-      //                     child: Text('Okay'),
-      //                     onPressed: () {
-      //                       Navigator.of(context).pop();
-      //                     })
-      //               ],
-      //             ));
-      //   }
-      // } else {
-      //   try {
-      //     //update provider
-      //     await Provider.of<RequestsProvider>(context, listen: false)
-      //         .addRequest(_editedRequest);
-      //   } catch (error) {
-      //     await showDialog(
-      //         context: context,
-      //         builder: (ctx) => AlertDialog(
-      //               title: Text('Error'),
-      //               content: Text('Please check your internet connection.'),
-      //               actions: [
-      //                 MaterialButton(
-      //                     child: Text('Okay'),
-      //                     onPressed: () {
-      //                       Navigator.of(context).pop();
-      //                     })
-      //               ],
-      //             ));
-      //   }
-      // }
-
       print(_editedRequest.toString());
 
+      //Add the new coupon to database
       try {
         //update provider
         await Provider.of<RequestsProvider>(context, listen: false)
@@ -130,11 +89,12 @@ class _RequestCouponState extends State<RequestCouponScreen> {
         await showDialog(
             context: context,
             builder: (ctx) => AlertDialog(
-                  title: Text('Error'),
-                  content: Text('Please check your internet connection.'),
+                  title: Text(AppLocalizations.of(context).msg_error),
+                  content:
+                      Text(AppLocalizations.of(context).msg_check_internet),
                   actions: [
                     MaterialButton(
-                        child: Text('Okay'),
+                        child: Text(AppLocalizations.of(context).msg_okay),
                         onPressed: () {
                           Navigator.of(context).pop();
                         })
@@ -147,8 +107,8 @@ class _RequestCouponState extends State<RequestCouponScreen> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text(
-          'Your request has been submitted. Thank you!',
+        content: Text(
+          AppLocalizations.of(context).msg_request_submitted,
           textAlign: TextAlign.center,
         ),
         action: SnackBarAction(
@@ -165,15 +125,7 @@ class _RequestCouponState extends State<RequestCouponScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Request a coupon'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: () {
-              _saveForm();
-            },
-          )
-        ],
+        title: Text(AppLocalizations.of(context).request_coupon),
       ),
       drawer: AppDrawer(),
       body: _isLoading
@@ -187,14 +139,16 @@ class _RequestCouponState extends State<RequestCouponScreen> {
                     children: [
                       TextFormField(
                         initialValue: _initValues['userName'],
-                        decoration: InputDecoration(labelText: 'User name'),
+                        decoration: InputDecoration(
+                            labelText: AppLocalizations.of(context).user_name),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
                           FocusScope.of(context).requestFocus(_emailFocusNode);
                         },
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'This field is mandatory';
+                            return AppLocalizations.of(context)
+                                .msg_mandatory_field;
                           } else {
                             return null;
                           }
@@ -210,7 +164,8 @@ class _RequestCouponState extends State<RequestCouponScreen> {
                       ),
                       TextFormField(
                         initialValue: _initValues['email'],
-                        decoration: InputDecoration(labelText: 'Email address'),
+                        decoration: InputDecoration(
+                            labelText: AppLocalizations.of(context).email),
                         textInputAction: TextInputAction.next,
                         focusNode: _emailFocusNode,
                         onFieldSubmitted: (_) {
@@ -218,7 +173,8 @@ class _RequestCouponState extends State<RequestCouponScreen> {
                         },
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'This field is mandatory';
+                            return AppLocalizations.of(context)
+                                .msg_mandatory_field;
                           } else {
                             return null;
                           }
@@ -234,7 +190,8 @@ class _RequestCouponState extends State<RequestCouponScreen> {
                       ),
                       TextFormField(
                         initialValue: _initValues['store'],
-                        decoration: InputDecoration(labelText: 'Store name'),
+                        decoration: InputDecoration(
+                            labelText: AppLocalizations.of(context).store_name),
                         textInputAction: TextInputAction.next,
                         focusNode: _storeFocusNode,
                         onFieldSubmitted: (_) {
@@ -243,7 +200,8 @@ class _RequestCouponState extends State<RequestCouponScreen> {
                         },
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'This field is mandatory';
+                            return AppLocalizations.of(context)
+                                .msg_mandatory_field;
                           } else {
                             return null;
                           }
@@ -259,13 +217,15 @@ class _RequestCouponState extends State<RequestCouponScreen> {
                       ),
                       TextFormField(
                         initialValue: _initValues['link'],
-                        decoration: InputDecoration(labelText: 'Store link'),
+                        decoration: InputDecoration(
+                            labelText: AppLocalizations.of(context).store_link),
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.url,
                         focusNode: _storeLinkFocusNode,
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'This field is mandatory';
+                            return AppLocalizations.of(context)
+                                .msg_mandatory_field;
                           } else {
                             return null;
                           }
@@ -288,7 +248,8 @@ class _RequestCouponState extends State<RequestCouponScreen> {
                               _saveForm();
                             },
                             color: Theme.of(context).primaryColor,
-                            child: Text('REQUEST COUPON',
+                            child: Text(
+                                AppLocalizations.of(context).request_coupon,
                                 style: TextStyle(color: Colors.white)),
                           ))
                     ],
