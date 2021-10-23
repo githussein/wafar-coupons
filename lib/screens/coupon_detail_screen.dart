@@ -5,9 +5,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../providers/coupons_provider.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../models/ad_helper.dart';
 
 class CouponDetailScreen extends StatelessWidget {
   static const routeName = '/coupon-details';
+
+  BannerAd _ad;
+  bool isLoading;
 
   @override
   Widget build(BuildContext context) {

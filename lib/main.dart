@@ -6,6 +6,7 @@ import 'package:wafar_cash/l10n/l10n.dart';
 import 'package:wafar_cash/screens/contact_us.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'services/auth.dart';
 import 'providers/offers_provider.dart';
@@ -27,7 +28,11 @@ import 'screens/manage_requests_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  //Initialize Firebase
   await Firebase.initializeApp();
+  //Initialize Google Mobile Ads
+  MobileAds.instance.initialize();
 
   runApp(MyApp());
 }

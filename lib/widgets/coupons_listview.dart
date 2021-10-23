@@ -5,6 +5,8 @@ import 'package:share/share.dart';
 import '../providers/coupons_provider.dart';
 import '../screens/coupon_detail_screen.dart';
 import '../providers/coupon.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../models/ad_helper.dart';
 
 class CouponsListView extends StatelessWidget {
   // final bool showFavorites;
@@ -35,19 +37,59 @@ class CouponsListView extends StatelessWidget {
 }
 
 class CouponItem extends StatelessWidget {
+  // ===== Google Mobile Ads =====
+  static int count = 3;
+  InterstitialAd _interstitialAd;
+  bool _isInterstitialAdReady = false;
   @override
   Widget build(BuildContext context) {
+    void _loadInterstitialAd(String couponId) {
+      InterstitialAd.load(
+        adUnitId: AdHelper.interstitialAdUnitId,
+        request: AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (ad) {
+            this._interstitialAd = ad;
+
+            ad.fullScreenContentCallback = FullScreenContentCallback(
+              onAdDismissedFullScreenContent: (ad) {
+                Navigator.of(context).pushNamed(
+                  CouponDetailScreen.routeName,
+                  arguments: couponId,
+                );
+              },
+            );
+
+            _isInterstitialAdReady = true;
+          },
+          onAdFailedToLoad: (err) {
+            print('Failed to load an interstitial ad: ${err.message}');
+            _isInterstitialAdReady = false;
+          },
+        ),
+      );
+    }
+
     //listen once to the provider to get coupon object
     final coupon = Provider.of<Coupon>(context, listen: false);
+
+    _loadInterstitialAd(coupon.id);
+
     return Card(
       margin: EdgeInsets.only(bottom: 8, left: 8, right: 8),
       elevation: 2,
       child: ListTile(
         onTap: () {
-          Navigator.of(context).pushNamed(
-            CouponDetailScreen.routeName,
-            arguments: coupon.id,
-          );
+          if (_isInterstitialAdReady && ((count * 3) % 4 == 0)) {
+            _interstitialAd?.show();
+          } else {
+            Navigator.of(context).pushNamed(
+              CouponDetailScreen.routeName,
+              arguments: coupon.id,
+            );
+          }
+          print('count = $count, (count * 3) % 4 = ${(count * 3) % 4}');
+          count++;
         },
         contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         leading: Container(
