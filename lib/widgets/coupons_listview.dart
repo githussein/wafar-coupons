@@ -22,6 +22,7 @@ class CouponsListView extends StatelessWidget {
 
     //store the list of coupons
     final coupons = couponsData.items;
+    coupons.shuffle();
 
     return ListView.builder(
       shrinkWrap: true,
