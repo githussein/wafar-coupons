@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,6 +8,7 @@ import 'package:wafar_cash/screens/contact_us.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'services/auth.dart';
 import 'providers/offers_provider.dart';
@@ -26,6 +28,18 @@ import 'screens/categorized_stores_screen.dart';
 import 'screens/request_coupon_screen.dart';
 import 'screens/manage_requests_screen.dart';
 
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage event) async {
+  print("Handling a background message: ${event.messageId}");
+
+  if (event.data['coupId'] != null) {
+    Navigator.of(navigatorKey.currentContext).pushNamed(
+        CouponDetailScreen.routeName,
+        arguments: event.data['coupId']);
+  }
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -33,6 +47,8 @@ Future<void> main() async {
   await Firebase.initializeApp();
   //Initialize Google Mobile Ads
   MobileAds.instance.initialize();
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(MyApp());
 }
@@ -56,6 +72,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<LocaleProvider>(
         builder: (context, provider, child) => MaterialApp(
+          navigatorKey: navigatorKey,
           title: 'Wafar Cash!',
           debugShowCheckedModeBanner: false,
           supportedLocales: L10n.all,

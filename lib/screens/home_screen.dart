@@ -1,7 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import '../main.dart';
 import '../providers/locale_provider.dart';
 import '../providers/coupons_provider.dart';
 import '../providers/offers_provider.dart';
@@ -10,12 +14,19 @@ import '../widgets/coupons_listview.dart';
 import '../widgets/banner_slider.widget.dart';
 import 'categorized_stores_screen.dart';
 import '../widgets/language_picker_widget.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:wafar_cash/screens/coupon_detail_screen.dart';
 import '../models/ad_helper.dart';
 
 enum FilterCoupons { Favourites, All }
 enum AppLanguage { ARABIC, ENGLISH }
 String categoryFilter = "all";
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage event) async {
+  print("Handling a background message: ${event.messageId}");
+
+  Navigator.of(navigatorKey.currentContext)
+      .pushNamed(CouponDetailScreen.routeName, arguments: event.data['coupId']);
+}
 
 class HomeScreen extends StatefulWidget {
   // static const routeName = '/home';
@@ -29,8 +40,65 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    super.initState();
+    // ===== PUSH NOTIFICATIONS =====
+    FirebaseMessaging messaging;
+    messaging = FirebaseMessaging.instance;
 
+    //Request permission for iOS devices
+    if (Platform.isIOS) {
+      messaging.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true,
+      );
+    }
+
+    messaging.getToken().then((value) {
+      print('Device token: ' + value);
+    });
+
+    //Handle notifications in different scenarios
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage event) async {
+      print("onMessageOpenedApp: $event");
+
+      if (event.data['coupId'] != null) {
+        Navigator.of(context).pushNamed(CouponDetailScreen.routeName,
+            arguments: event.data['coupId']);
+      }
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      print('message new received: ' + event.data['coupId']);
+
+      if (event.data['coupId'] != null) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text(event.notification.title),
+                content: Text(event.notification.body),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacementNamed(
+                          CouponDetailScreen.routeName,
+                          arguments: event.data['coupId']);
+                    },
+                    child: Text('تصفح الكوبون'),
+                  )
+                ],
+              );
+            });
+      }
+    });
+
+    // ===== GOOGLE MOBILE ADS =====
     _bannerAd = BannerAd(
       adUnitId: AdHelper.bannerAdUnitId,
       request: AdRequest(),
@@ -50,6 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     _bannerAd.load();
+
+    super.initState();
   }
 
   @override
@@ -58,8 +128,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  //manage filters
-  var _showOnlyFavorites = false;
   var _isInit = true;
   var _isLoading = false;
 
@@ -89,51 +157,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).home_page),
-        //Favorites Filter
-        // actions: <Widget>[
-        //   PopupMenuButton(
-        //       onSelected: (FilterCoupons selectedValue) {
-        //         setState(() {
-        //           if (selectedValue == FilterCoupons.Favourites) {
-        //             _showOnlyFavorites = true;
-        //           } else if (selectedValue == FilterCoupons.All) {
-        //             _showOnlyFavorites = false;
-        //           }
-        //         });
-        //       },
-        //       icon: Icon(Icons.more_vert),
-        //       itemBuilder: (_) => [
-        //             PopupMenuItem(
-        //                 child: Text('Favorites only'),
-        //                 value: FilterCoupons.Favourites),
-        //             PopupMenuItem(
-        //                 child: Text('Show all'), value: FilterCoupons.All),
-        //           ])
-        // ],
-
-        // actions: <Widget>[
-        //   PopupMenuButton(
-        //     icon: Icon(Icons.language),
-        //     itemBuilder: (_) => [
-        //       PopupMenuItem(child: Text('عربي'), value: AppLanguage.ARABIC),
-        //       PopupMenuItem(child: Text('English'), value: AppLanguage.ENGLISH),
-        //     ],
-        //     onSelected: (AppLanguage selectedValue) {
-        //       setState(() {
-        //         if (selectedValue == AppLanguage.ARABIC) {
-        //           final provider =
-        //               Provider.of<LocaleProvider>(context, listen: false);
-        //           provider.setLocale(provider.locale);
-        //         } else if (selectedValue == AppLanguage.ENGLISH) {
-        //           final provider =
-        //               Provider.of<LocaleProvider>(context, listen: false);
-        //           provider.setLocale(provider.locale);
-        //         }
-        //       });
-        //     },
-        //   )
-        // ],
-
         actions: [
           LanguagePickerWidget(),
           const SizedBox(width: 12),

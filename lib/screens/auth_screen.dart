@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:wafar_cash/models/http_exception.dart';
 
 import '../services/auth.dart';
 
@@ -108,21 +109,21 @@ class _AuthCardState extends State<AuthCard> {
             .signup(_authData['email'], _authData['password']);
       }
     } on FirebaseAuthException catch (error) {
-      // } on HttpException catch (error) {
-      // var errorMessage = 'Authentication problem.';
-      // if (error.toString().contains('EMAIL_EXISTS')) {
-      //   errorMessage = 'This email address is already used.';
-      // } else if (error.toString().contains('INVALID_EMAIL')) {
-      //   errorMessage = 'This is an invalid email.';
-      // } else if (error.toString().contains('WEAK_PASSWORD')) {
-      //   errorMessage = 'This password is weak.';
-      // } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
-      //   errorMessage = 'Could not find this email address.';
-      // } else if (error.toString().contains('INVALID_PASSWORD')) {
-      //   errorMessage = 'The password is invalid.';
-      // }
+    } on HttpException catch (error) {
+      var errorMessage = 'Authentication problem.';
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        throw HttpException('This email address is already used.');
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        throw HttpException('This is an invalid email.');
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        throw HttpException('This password is weak.');
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        throw HttpException('Could not find this email address.');
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        throw HttpException('The password is invalid.');
+      }
 
-      print('Failed with error code: ${error.code}');
+      print('Failed with error code: $error');
       print(error.toString());
 
       _showErrorDialog(error.message);
@@ -172,6 +173,7 @@ class _AuthCardState extends State<AuthCard> {
                   decoration: InputDecoration(
                       labelText: AppLocalizations.of(context).email),
                   keyboardType: TextInputType.emailAddress,
+                  textDirection: TextDirection.ltr,
                   validator: (value) {
                     if (value.isEmpty || !value.contains('@')) {
                       return AppLocalizations.of(context).msg_invalid_email;
@@ -185,6 +187,7 @@ class _AuthCardState extends State<AuthCard> {
                 TextFormField(
                   decoration: InputDecoration(
                       labelText: AppLocalizations.of(context).password),
+                  textDirection: TextDirection.ltr,
                   obscureText: true,
                   controller: _passwordController,
                   validator: (value) {
@@ -204,6 +207,7 @@ class _AuthCardState extends State<AuthCard> {
                     decoration: InputDecoration(
                         labelText:
                             AppLocalizations.of(context).confirm_password),
+                    textDirection: TextDirection.ltr,
                     obscureText: true,
                     validator: _authMode == AuthMode.SIGNUP
                         ? (value) {

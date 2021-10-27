@@ -130,6 +130,7 @@ class OffersProvider with ChangeNotifier {
       _offersItems = loadedOffersList;
       notifyListeners();
     } catch (error) {
+      print('Maybe here..!');
       throw (error);
     }
   }
