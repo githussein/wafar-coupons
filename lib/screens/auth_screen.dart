@@ -24,8 +24,8 @@ class AuthScreen extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromRGBO(128, 0, 128, 1).withOpacity(0.9),
                   Color.fromRGBO(227, 83, 53, 1).withOpacity(0.9),
+                  Color.fromRGBO(128, 0, 128, 1).withOpacity(0.9),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -37,18 +37,8 @@ class AuthScreen extends StatelessWidget {
             child: Container(
               height: deviceSize.height,
               width: deviceSize.width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    'assets/images/app-logo.png',
-                    height: 120,
-                    width: 120,
-                  ),
-                  Container(height: 20),
-                  AuthCard(),
-                ],
+              child: SingleChildScrollView(
+                child: AuthCard(),
               ),
             ),
           ),
@@ -70,9 +60,15 @@ class AuthCard extends StatefulWidget {
 class _AuthCardState extends State<AuthCard> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.SIGNUP;
+
   Map<String, String> _authData = {
     'email': '',
     'password': '',
+    'name': '',
+    'phone': '',
+    'country': '',
+    'age': '',
+    'gender': '',
   };
   var _isLoading = false;
   final _passwordController = TextEditingController();
@@ -104,9 +100,7 @@ class _AuthCardState extends State<AuthCard> {
             .read<AuthService>()
             .login(_authData['email'], _authData['password']);
       } else {
-        await context
-            .read<AuthService>()
-            .signup(_authData['email'], _authData['password']);
+        await context.read<AuthService>().signup(_authData);
       }
     } on FirebaseAuthException catch (error) {
     } on HttpException catch (error) {
@@ -150,25 +144,49 @@ class _AuthCardState extends State<AuthCard> {
     }
   }
 
+  String _gender = 'ذكر';
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     return Card(
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 40),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
       elevation: 8.0,
       child: Container(
-        height: _authMode == AuthMode.SIGNUP ? 320 : 260,
+        height: _authMode == AuthMode.SIGNUP
+            ? deviceSize.height * 0.9
+            : deviceSize.height * 0.7,
         constraints:
             BoxConstraints(minHeight: _authMode == AuthMode.SIGNUP ? 320 : 260),
-        width: deviceSize.width * 0.75,
+        width: deviceSize.width * 0.85,
         padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                Image.asset(
+                  'assets/images/app-logo.png',
+                  height: 150,
+                  width: 150,
+                ),
+                if (_authMode == AuthMode.SIGNUP)
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'الاسم'),
+                    keyboardType: TextInputType.text,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'الاسم مطلوب';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _authData['name'] = value;
+                    },
+                  ),
                 TextFormField(
                   decoration: InputDecoration(
                       labelText: AppLocalizations.of(context).email),
@@ -176,7 +194,7 @@ class _AuthCardState extends State<AuthCard> {
                   textDirection: TextDirection.ltr,
                   validator: (value) {
                     if (value.isEmpty || !value.contains('@')) {
-                      return AppLocalizations.of(context).msg_invalid_email;
+                      return 'البريد الالكتروني مطلوب';
                     }
                     return null;
                   },
@@ -220,9 +238,80 @@ class _AuthCardState extends State<AuthCard> {
                           }
                         : null,
                   ),
-                SizedBox(
-                  height: 20,
-                ),
+                if (_authMode == AuthMode.SIGNUP)
+                  DropdownButtonFormField<String>(
+                    // value: selectedGender,
+                    hint: Text('البلد'),
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        _gender = newValue;
+                      });
+                    },
+                    items: <String>[
+                      'الأردن',
+                      'الإمارات',
+                      'البحرين',
+                      'السعودية',
+                      'الكويت',
+                      'سلطنة عمان',
+                      'قطر',
+                      'مصر',
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    validator: (value) {
+                      if (value == null) {
+                        return 'برجاء اختيار البلد';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _authData['country'] = value;
+                    },
+                  ),
+                if (_authMode == AuthMode.SIGNUP)
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'رقم الهاتف'),
+                    keyboardType: TextInputType.number,
+                    textDirection: TextDirection.ltr,
+                    onSaved: (value) {
+                      _authData['phone'] = value;
+                    },
+                  ),
+                if (_authMode == AuthMode.SIGNUP)
+                  DropdownButtonFormField<String>(
+                    // value: selectedGender,
+                    hint: Text('النوع'),
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        _gender = newValue;
+                      });
+                    },
+                    items: <String>['ذكر', 'أنثى']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onSaved: (value) {
+                      _authData['gender'] = value == null ? 'ذكر' : value;
+                    },
+                  ),
+                if (_authMode == AuthMode.SIGNUP)
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'السن'),
+                    keyboardType: TextInputType.number,
+                    onSaved: (value) {
+                      _authData['age'] = value;
+                    },
+                  ),
+                SizedBox(height: 20),
                 if (_isLoading)
                   CircularProgressIndicator()
                 else
@@ -239,6 +328,7 @@ class _AuthCardState extends State<AuthCard> {
                     color: Theme.of(context).primaryColor,
                     textColor: Theme.of(context).primaryTextTheme.button.color,
                   ),
+                SizedBox(height: 10),
                 MaterialButton(
                   child: Text(
                       '${_authMode == AuthMode.LOGIN ? AppLocalizations.of(context).sign_up : AppLocalizations.of(context).login}' +
@@ -248,6 +338,7 @@ class _AuthCardState extends State<AuthCard> {
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   textColor: Theme.of(context).primaryColor,
                 ),
+                SizedBox(height: 40),
               ],
             ),
           ),

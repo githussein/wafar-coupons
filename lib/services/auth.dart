@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import './database.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth;
@@ -22,10 +23,25 @@ class AuthService {
   }
 
   //register with email and password
-  Future signup(String email, String password) async {
+  Future signup(Map<String, String> _authData) async {
     try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _authData['email'],
+        password: _authData['password'],
+      );
+
+      //create a new FireStore document for the user using uid
+      final currentUser = FirebaseAuth.instance.currentUser;
+      print('>>>> uid: ${currentUser.uid}');
+      await DatabaseService(uid: currentUser.uid).updateUserData(
+        _authData['name'],
+        _authData['email'],
+        _authData['gender'],
+        _authData['phone'],
+        _authData['country'],
+        _authData['age'],
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
