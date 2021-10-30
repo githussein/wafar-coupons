@@ -275,7 +275,8 @@ class _AuthCardState extends State<AuthCard> {
                   ),
                 if (_authMode == AuthMode.SIGNUP)
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'رقم الهاتف'),
+                    decoration:
+                        InputDecoration(labelText: 'رقم الهاتف (اختياري)'),
                     keyboardType: TextInputType.number,
                     textDirection: TextDirection.ltr,
                     onSaved: (value) {
@@ -285,7 +286,7 @@ class _AuthCardState extends State<AuthCard> {
                 if (_authMode == AuthMode.SIGNUP)
                   DropdownButtonFormField<String>(
                     // value: selectedGender,
-                    hint: Text('النوع'),
+                    hint: Text('النوع (اختياري)'),
                     icon: const Icon(Icons.keyboard_arrow_down),
                     onChanged: (String newValue) {
                       setState(() {
@@ -305,7 +306,7 @@ class _AuthCardState extends State<AuthCard> {
                   ),
                 if (_authMode == AuthMode.SIGNUP)
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'السن'),
+                    decoration: InputDecoration(labelText: 'السن (اختياري)'),
                     keyboardType: TextInputType.number,
                     onSaved: (value) {
                       _authData['age'] = value;

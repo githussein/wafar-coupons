@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../screens/manage_coupons_screen.dart';
-import '../screens/manage_offers_screen.dart';
 import '../services/auth.dart';
 import '../screens/stores_screen.dart';
 import '../screens/contact_us.dart';
 import '../screens/request_coupon_screen.dart';
-import '../screens/manage_requests_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -69,32 +66,32 @@ class AppDrawer extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Divider(),
-                      ListTile(
-                        leading: Icon(Icons.edit),
-                        title:
-                            Text(AppLocalizations.of(context).manage_coupons),
-                        onTap: () {
-                          Navigator.of(context)
-                              .pushNamed(ManageCouponsScreen.routeName);
-                        },
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.edit),
-                        title: Text(AppLocalizations.of(context).manage_offers),
-                        onTap: () {
-                          Navigator.of(context)
-                              .pushNamed(ManageOffersScreen.routeName);
-                        },
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.edit),
-                        title:
-                            Text(AppLocalizations.of(context).manage_requests),
-                        onTap: () {
-                          Navigator.of(context)
-                              .popAndPushNamed(ManageRequestsScreen.routeName);
-                        },
-                      ),
+                      // ListTile(
+                      //   leading: Icon(Icons.edit),
+                      //   title:
+                      //       Text(AppLocalizations.of(context).manage_coupons),
+                      //   onTap: () {
+                      //     Navigator.of(context)
+                      //         .pushNamed(ManageCouponsScreen.routeName);
+                      //   },
+                      // ),
+                      // ListTile(
+                      //   leading: Icon(Icons.edit),
+                      //   title: Text(AppLocalizations.of(context).manage_offers),
+                      //   onTap: () {
+                      //     Navigator.of(context)
+                      //         .pushNamed(ManageOffersScreen.routeName);
+                      //   },
+                      // ),
+                      // ListTile(
+                      //   leading: Icon(Icons.edit),
+                      //   title:
+                      //       Text(AppLocalizations.of(context).manage_requests),
+                      //   onTap: () {
+                      //     Navigator.of(context)
+                      //         .popAndPushNamed(ManageRequestsScreen.routeName);
+                      //   },
+                      // ),
                       ListTile(
                         leading: Icon(Icons.logout),
                         title: Text(AppLocalizations.of(context).logout),

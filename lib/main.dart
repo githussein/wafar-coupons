@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,17 +15,12 @@ import 'providers/coupons_provider.dart';
 import 'providers/requests_provider.dart';
 import 'providers/locale_provider.dart';
 import 'screens/auth_screen.dart';
-import 'screens/edit_coupon_screen.dart';
-import 'screens/edit_offer_screen.dart';
-import 'screens/manage_offers_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/coupon_detail_screen.dart';
-import 'screens/manage_coupons_screen.dart';
 import 'screens/stores_screen.dart';
 import 'screens/store_coupons_screen.dart';
 import 'screens/categorized_stores_screen.dart';
 import 'screens/request_coupon_screen.dart';
-import 'screens/manage_requests_screen.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -92,12 +86,12 @@ class MyApp extends StatelessWidget {
           routes: {
             // AuthScreen.routeName: (ctx) => AuthScreen(),
             CouponDetailScreen.routeName: (ctx) => CouponDetailScreen(),
-            EditCouponScreen.routeName: (ctx) => EditCouponScreen(),
-            EditOfferScreen.routeName: (ctx) => EditOfferScreen(),
+            // EditCouponScreen.routeName: (ctx) => EditCouponScreen(),
+            // EditOfferScreen.routeName: (ctx) => EditOfferScreen(),
             RequestCouponScreen.routeName: (ctx) => RequestCouponScreen(),
-            ManageCouponsScreen.routeName: (ctx) => ManageCouponsScreen(),
-            ManageOffersScreen.routeName: (ctx) => ManageOffersScreen(),
-            ManageRequestsScreen.routeName: (ctx) => ManageRequestsScreen(),
+            // ManageCouponsScreen.routeName: (ctx) => ManageCouponsScreen(),
+            // ManageOffersScreen.routeName: (ctx) => ManageOffersScreen(),
+            // ManageRequestsScreen.routeName: (ctx) => ManageRequestsScreen(),
             StoresScreen.routeName: (ctx) => StoresScreen(),
             StoreCouponsScreen.routeName: (ctx) => StoreCouponsScreen(),
             ContactUsScreen.routeName: (ctx) => ContactUsScreen(),
@@ -119,7 +113,7 @@ class AuthenticationWrapper extends StatelessWidget {
       var currentUser = FirebaseAuth.instance.currentUser;
 
       if (currentUser != null) {
-        print('IDDDDDDDDDDDDDDDDDDDDDD:   ' + currentUser.uid);
+        print('>>> uid:   ' + currentUser.uid);
       }
 
       return HomeScreen();
