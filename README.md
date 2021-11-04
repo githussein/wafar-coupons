@@ -1,6 +1,6 @@
 # Wafar Coupons
 
-A Flutter application that shows discount coupons and latest offers for online stores.
+A Flutter application that shows discount coupons and latest offers for shoping online.
 
 ## Features
 
