@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../services/auth.dart';
 import '../screens/stores_screen.dart';
@@ -23,36 +24,52 @@ class AppDrawer extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.card_giftcard),
+                leading: FaIcon(
+                  FontAwesomeIcons.home,
+                  color: Theme.of(context).primaryColorDark,
+                ),
                 title: Text(AppLocalizations.of(context).home_page),
                 onTap: () {
                   Navigator.of(context).pushReplacementNamed('/');
                 },
               ),
+              _buildDivider(),
               ListTile(
-                leading: Icon(Icons.storefront_sharp),
+                leading: FaIcon(
+                  FontAwesomeIcons.store,
+                  color: Theme.of(context).primaryColorDark,
+                ),
                 title: Text(AppLocalizations.of(context).stores),
                 onTap: () {
                   Navigator.of(context)
                       .pushReplacementNamed(StoresScreen.routeName);
                 },
               ),
+              _buildDivider(),
               ListTile(
-                leading: Icon(Icons.send),
+                leading: FaIcon(
+                  FontAwesomeIcons.fileContract,
+                  color: Theme.of(context).primaryColorDark,
+                ),
                 title: Text(AppLocalizations.of(context).request_coupon),
                 onTap: () {
                   Navigator.of(context)
                       .pushNamed(RequestCouponScreen.routeName);
                 },
               ),
+              _buildDivider(),
               ListTile(
-                leading: Icon(Icons.message),
+                leading: FaIcon(
+                  FontAwesomeIcons.envelopeOpen,
+                  color: Theme.of(context).primaryColorDark,
+                ),
                 title: Text(AppLocalizations.of(context).contact_us),
                 onTap: () {
                   Navigator.of(context)
                       .pushReplacementNamed(ContactUsScreen.routeName);
                 },
               ),
+              _buildDivider(),
             ],
           ),
         ),
@@ -66,34 +83,11 @@ class AppDrawer extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Divider(),
-                      // ListTile(
-                      //   leading: Icon(Icons.edit),
-                      //   title:
-                      //       Text(AppLocalizations.of(context).manage_coupons),
-                      //   onTap: () {
-                      //     Navigator.of(context)
-                      //         .pushNamed(ManageCouponsScreen.routeName);
-                      //   },
-                      // ),
-                      // ListTile(
-                      //   leading: Icon(Icons.edit),
-                      //   title: Text(AppLocalizations.of(context).manage_offers),
-                      //   onTap: () {
-                      //     Navigator.of(context)
-                      //         .pushNamed(ManageOffersScreen.routeName);
-                      //   },
-                      // ),
-                      // ListTile(
-                      //   leading: Icon(Icons.edit),
-                      //   title:
-                      //       Text(AppLocalizations.of(context).manage_requests),
-                      //   onTap: () {
-                      //     Navigator.of(context)
-                      //         .popAndPushNamed(ManageRequestsScreen.routeName);
-                      //   },
-                      // ),
                       ListTile(
-                        leading: Icon(Icons.logout),
+                        leading: Icon(
+                          Icons.logout,
+                          color: Theme.of(context).primaryColorDark,
+                        ),
                         title: Text(AppLocalizations.of(context).logout),
                         onTap: () async {
                           //1- close the drawer
@@ -106,5 +100,14 @@ class AppDrawer extends StatelessWidget {
                 ))),
       ],
     ));
+  }
+
+  Container _buildDivider() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      width: 200,
+      height: 1.0,
+      color: Colors.grey.shade200,
+    );
   }
 }

@@ -1,7 +1,6 @@
 {
     "language": "English",
     "app_name": "wafar Cash!",
-    "coupon_details": "Coupon Details",
     "home_page": "Home page",
     "stores": "Stores",
     "request_coupon": "Request a coupon",
@@ -20,6 +19,7 @@
     "login": "Log in",
     "sign_up": "Sign up",
     "instead": "instead",
+    "website": "Website",
     "facebook": "Facebook",
     "twitter": "Twitter",
     "instagram": "Instagram",
@@ -36,6 +36,7 @@
     "store_name": "Store name",
     "store_link": "Store link",
     "store_coupons": "Store Coupons",
+    "contact_us_message": "We will be glad when you reach out through our website, email or our social media accounts.",
 
     "@language": {
       "description": "The current language"
