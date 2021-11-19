@@ -63,7 +63,7 @@ class ContactUsScreen extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                           ),
                           onTap: () async {
-                            await _openLink('https://wafarcash.com');
+                            await _launchInBrowser('https://wafarcash.com');
                           }),
                       _buildDivider(),
                       ListTile(
@@ -77,7 +77,7 @@ class ContactUsScreen extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                           ),
                           onTap: () async {
-                            await _openLink(
+                            await _launchInBrowser(
                                 'https://www.facebook.com/wafarcashcom');
                           }),
                       _buildDivider(),
@@ -92,7 +92,7 @@ class ContactUsScreen extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                           ),
                           onTap: () async {
-                            await _openLink(
+                            await _launchInBrowser(
                                 'https://www.instagram.com/wafarcashofficial');
                           }),
                       _buildDivider(),
@@ -107,7 +107,8 @@ class ContactUsScreen extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                           ),
                           onTap: () async {
-                            await _openLink('https://twitter.com/wafarcash');
+                            await _launchInBrowser(
+                                'https://twitter.com/wafarcash');
                           }),
                       _buildDivider(),
                       ListTile(
@@ -142,12 +143,12 @@ class ContactUsScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _openLink(String url) async {
+  Future<void> _launchInBrowser(String url) async {
     if (await canLaunch(url)) {
       await launch(
         url,
-        forceSafariVC: true,
-        forceWebView: true,
+        forceSafariVC: false,
+        forceWebView: false,
         headers: <String, String>{'my_header_key': 'my_header_value'},
       );
     } else {

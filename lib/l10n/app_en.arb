@@ -36,7 +36,7 @@
     "store_name": "Store name",
     "store_link": "Store link",
     "store_coupons": "Store Coupons",
-    "contact_us_message": "We will be glad when you reach out through our website, email or our social media accounts.",
+    "contact_us_message": "We will be glad when you reach out through our website, email or through our social media accounts.",
 
     "@language": {
       "description": "The current language"

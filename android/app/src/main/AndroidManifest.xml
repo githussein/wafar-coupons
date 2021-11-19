@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wafarcash.wafar_cash">
     <application
-        android:label="wafar_cash"
+        android:label="Wafar Cash"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
